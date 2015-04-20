@@ -22,9 +22,11 @@ echo "Backup will be stored in: ${BACKUP_DIR}"
 
 for JOB in ${JOBS}; do
     BACKUP_DEST="${BACKUP_DIR}/${JOB}.xml"
+
     if [ ! -f "${BACKUP_DEST}" ]; then
         echo "Downloading config: ${JOB}"
         ${JENKINS_CMD} get-job "${JOB}" > "${BACKUP_DEST}"
+
         if [ ! -s "${BACKUP_DEST}" ]; then
             echo "File ${BACKUP_DEST} is empty. Removing it to attempt to re-download it next time."
             rm "${BACKUP_DEST}"
