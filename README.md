@@ -32,7 +32,7 @@ USER="areitzel"
 PASSWORD="insecure"
 NAME="Alexander Reitzel"
 MAIL="funtimecoding@gmail.com"
-# JENKINS_URL is optional and falls back to `http://localhost:8080`
+# `JENKINS_URL` is optional and falls back to `http://localhost:8080`.
 JENKINS_URL="http://ci.dev"
 PROJECTS_DIR="/home/shiin/code"
 ```
