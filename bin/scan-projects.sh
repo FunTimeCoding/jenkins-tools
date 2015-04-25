@@ -8,9 +8,6 @@ PROJECTS=$(ls "${PROJECT_DIR}")
 
 for PROJECT in ${PROJECTS}; do
     JOB_FOUND=0
-    NAME_DIFFERS=0
-    NO_GIT_REPO=0
-    NO_GIT_REMOTE=0
 
     for JOB in ${JOBS}; do
         if [ "${PROJECT}" = "${JOB}" ]; then
@@ -19,56 +16,56 @@ for PROJECT in ${PROJECTS}; do
         fi
     done
 
+    if [ "${JOB_FOUND}" = "1" ]; then
+        echo "${PROJECT} has a CI job."
+        continue
+    fi
+
     DIR="${PROJECT_DIR}/${PROJECT}"
     cd "${DIR}"
 
-    if [ -d ".git" ]; then
-        REMOTES=$(git remote -v)
-
-        if [ "${REMOTES}" = ""  ]; then
-            NO_GIT_REMOTE=1
-            echo "${PROJECT} has no git remote."
-        else
-            URL=$(echo ${REMOTES} | awk '{ print $2 }')
-            REPO="${URL##*/}"
-            REPO="${REPO%.git}"
-
-            if [ ! "${REPO}" = "${PROJECT}" ]; then
-                NAME_DIFFERS=1
-                echo "${PROJECT} name differs locally and in CI."
-            fi
-        fi
-    else
-        NO_GIT_REPO=1
+    if [ ! -d ".git" ]; then
         echo "${PROJECT} is not a git repository."
+        continue
     fi
 
-    if [ "${JOB_FOUND}" = "0" ] && [ "${NAME_DIFFERS}" = "0" ] && [ "${NO_GIT_REPO}" = "0" ] && [ "${NO_GIT_REMOTE}" = "0" ]; then
-        echo "${PROJECT} does not have a CI job. Create one? (y)es/(n)o/(a)bort"
-        read OPT
-        case ${OPT} in
-            y)
-                echo "Creating job."
+    REMOTES=$(git remote -v)
 
-                if [ -f "build.xml" ]; then
-                    echo "Project has an ant build script."
-                elif [ -f "build.sh" ]; then
-                    echo "Project has a shell build script."
-                    "${SCRIPT_DIR}/../bin/create-job.sh ${PROJECT} ${URL}"
-                else
-                    echo "No supported build script found."
-                fi
-                ;;
-            n)
-                echo "Not creating a job."
-                ;;
-            a)
-                echo "Aborted project scan."
-                exit 0
-                ;;
-            *)
-                echo "Invalid input, skipped."
-                ;;
-        esac
+    if [ "${REMOTES}" = ""  ]; then
+        echo "${PROJECT} has no git remote."
+        continue
     fi
+
+    URL=$(echo ${REMOTES} | awk '{ print $2 }')
+    REPO="${URL##*/}"
+    REPO="${REPO%.git}"
+
+    if [ ! "${REPO}" = "${PROJECT}" ]; then
+        echo "${PROJECT} name differs locally and in CI."
+        continue
+    fi
+
+    if [ ! -f "build.sh" ] && [ ! -f "build.xml" ]; then
+        echo "${PROJECT} has no build script."
+        continue
+    fi
+
+    echo "${PROJECT} does not have a CI job. Create one? (y)es/(n)o/(a)bort"
+    read OPT
+    case ${OPT} in
+        y)
+            echo "Creating job."
+            "${SCRIPT_DIR}/../bin/create-job.sh ${PROJECT} ${URL}"
+            ;;
+        n)
+            echo "Not creating a job."
+            ;;
+        a)
+            echo "Aborted project scan."
+            exit 0
+            ;;
+        *)
+            echo "Invalid input, skipped."
+            ;;
+    esac
 done
