@@ -4,24 +4,21 @@ SCRIPT_DIR=$(cd "$(dirname "${0}")"; pwd)
 
 usage()
 {
-    echo "Local usage: ${0} JOB_NAME REPO_URL"
+    echo "Local usage: ${0} REPO_URL"
 }
 
 . "${SCRIPT_DIR}/../lib/jenkins.sh"
 validate_cli
-JOB_NAME="${1}"
-
-if [ "${JOB_NAME}" = "" ]; then
-    usage
-    exit 1;
-fi
-
-REPO_URL="${2}"
+REPO_URL="${1}"
 
 if [ "${REPO_URL}" = "" ]; then
     usage
     exit 1;
 fi
 
-jjm -t git -u "${REPO_URL}" > "${JOB_NAME}.xml"
+echo "REPO_URL: ${REPO_URL}"
+JOB_NAME="${REPO_URL##*/}"
+JOB_NAME="${JOB_NAME%.git}"
+echo "JOB_NAME: ${JOB_NAME}"
+jjm -u "${REPO_URL}" > "${JOB_NAME}.xml"
 http --auth "${USER}:${PASSWORD}" POST "${JENKINS_URL}/createItem?name=${JOB_NAME}" "@${JOB_NAME}.xml"
