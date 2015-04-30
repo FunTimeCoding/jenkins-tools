@@ -17,7 +17,7 @@ for PROJECT in ${PROJECTS}; do
     done
 
     if [ "${JOB_FOUND}" = "1" ]; then
-        echo "${PROJECT} has a CI job."
+        echo "OK ${PROJECT}"
         continue
     fi
 
@@ -25,32 +25,32 @@ for PROJECT in ${PROJECTS}; do
     cd "${DIR}"
 
     if [ ! -d ".git" ]; then
-        echo "${PROJECT} is not a git repository."
+        echo "!! ${PROJECT} is no git repository."
         continue
     fi
 
     REMOTES=$(git remote -v)
 
     if [ "${REMOTES}" = ""  ]; then
-        echo "${PROJECT} has no git remote."
+        echo "!! ${PROJECT} has no git remote."
         continue
     fi
 
-    URL=$(echo ${REMOTES} | awk '{ print $2 }')
+    URL=$(echo "${REMOTES}" | awk '{ print $2 }')
     REPO="${URL##*/}"
     REPO="${REPO%.git}"
 
     if [ ! "${REPO}" = "${PROJECT}" ]; then
-        echo "${PROJECT} name differs locally and in CI."
+        echo "!! ${PROJECT} name differs locally and in CI."
         continue
     fi
 
     if [ ! -f "build.sh" ] && [ ! -f "build.xml" ]; then
-        echo "${PROJECT} has no build script."
+        echo "!! ${PROJECT} has no build script."
         continue
     fi
 
-    echo "${PROJECT} does not have a CI job. Create one? (y)es/(n)o/(a)bort"
+    echo "!! ${PROJECT} has no CI job. Create one? y/n"
     read OPT
     case ${OPT} in
         y)
