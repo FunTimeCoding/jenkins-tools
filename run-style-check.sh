@@ -1,2 +1,3 @@
-#!/bin/sh
-find . -name '*.sh' -exec shellcheck {} +
+#!/bin/sh -e
+
+find . -name '*.sh' -exec sh -c "shellcheck {} || true" \;
