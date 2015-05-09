@@ -46,8 +46,14 @@ Run any script verbosely if you want to debug it.
 ./bin/script.sh -v
 ```
 
-Install static analysis tool.
+Install development tools.
 
 ```sh
 brew install shellcheck
+```
+
+Run code style check.
+
+```sh
+./run-style-check.sh
 ```
