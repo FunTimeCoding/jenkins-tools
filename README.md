@@ -35,6 +35,14 @@ MAIL="funtimecoding@gmail.com"
 # `JENKINS_URL` is optional and falls back to `http://localhost:8080`.
 JENKINS_URL="http://ci.dev"
 PROJECTS_DIR="/home/shiin/code"
+# LDAP configuration.
+SERVER="1.2.3.4"
+ROOT_DN="foo=bar"
+USER_SEARCH_BASE="foo=bar"
+USER_SEARCH="foo=bar"
+GROUP_SEARCH_BASE="foo=bar"
+MANAGER_DN="foo=bar"
+MANAGER_PASSWORD="insecure"
 ```
 
 
