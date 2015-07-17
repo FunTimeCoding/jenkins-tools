@@ -27,7 +27,3 @@ instance.setSecurityRealm(ldaprealm)
 instance.setAuthorizationStrategy(new hudson.security.FullControlOnceLoggedInAuthorizationStrategy())
 instance.save()" | ${JENKINS_CMD} groovy =
 
-jenkins_auth
-
-echo "Restarting."
-${JENKINS_CMD} safe-restart
