@@ -55,7 +55,7 @@ for PROJECT in ${PROJECTS}; do
     case ${OPT} in
         y)
             echo "Creating job."
-            "${SCRIPT_DIR}/../bin/create-job.sh ${PROJECT} ${URL}"
+            "${SCRIPT_DIR}/create-job.sh ${PROJECT} ${URL}"
             ;;
         n)
             echo "Not creating a job."
