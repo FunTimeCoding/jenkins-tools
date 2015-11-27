@@ -84,8 +84,8 @@ validate_config()
         echo "validate_config"
     fi
 
-    if [ "${USER}" = "" ]; then
-        echo "USER not set."
+    if [ "${USERNAME}" = "" ]; then
+        echo "USERNAME not set."
 
         exit 1;
     fi
@@ -158,7 +158,7 @@ jenkins_auth()
     AUTH_USER_STRING=$(${JENKINS_CMD} who-am-i | grep as)
     AUTH_USER="${AUTH_USER_STRING#Authenticated as: }"
 
-    if [ ! "${USER}" = "${AUTH_USER}" ]; then
-        ${JENKINS_CMD} login --username "${USER}" --password "${PASSWORD}"
+    if [ ! "${USERNAME}" = "${AUTH_USER}" ]; then
+        ${JENKINS_CMD} login --username "${USERNAME}" --password "${PASSWORD}"
     fi
 }

@@ -22,7 +22,7 @@ Example config. Default location is ~/.jenkins-tools.conf.
 
 ```sh
 # Required
-USER="areitzel"
+USERNAME="areitzel"
 PASSWORD="insecurePassword"
 NAME="Alexander Reitzel"
 MAIL="funtimecoding@gmail.com"

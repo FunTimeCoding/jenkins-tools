@@ -5,7 +5,7 @@ SCRIPT_DIR=$(cd "$(dirname "${0}")"; pwd)
 validate_cli
 echo "def allowSignup = false
 def realm = new hudson.security.HudsonPrivateSecurityRealm(allowSignup)
-def user = realm.createAccount(\"${USER}\", \"${PASSWORD}\")
+def user = realm.createAccount(\"${USERNAME}\", \"${PASSWORD}\")
 user.setFullName(\"${NAME}\")
 user.addProperty(new hudson.tasks.Mailer.UserProperty(\"${MAIL}\"))
 user.save()
