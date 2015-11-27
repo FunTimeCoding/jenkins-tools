@@ -1,12 +1,13 @@
 #!/bin/sh -e
 
 SCRIPT_DIR=$(cd "$(dirname "${0}")"; pwd)
-getopt -o c:hv -l config:,help,verbose --name "${0}" -- "$@" > /dev/null
 CONFIG=""
+VERBOSE=false
 
 function_exists()
 {
-    declare -f -F ${1} > /dev/null
+    declare -f -F "${1}" > /dev/null
+
     return $?
 }
 
@@ -17,11 +18,17 @@ while true; do
             shift 2
             ;;
         -h|--help)
-            echo "Global usage: [-v][-h][-c|--config CONFIG]"
+            echo "Global usage: [-v|--verbose][-d|--debug][-h|--help][-c|--config CONFIG]"
             function_exists usage && usage
+
             exit 0
             ;;
         -v|--verbose)
+            VERBOSE=true
+            echo "Verbose mode enabled."
+            shift
+            ;;
+        -d|--debug)
             set -x
             shift
             ;;
@@ -53,13 +60,16 @@ find_config()
         if [ ! "$(command -v grealpath 2>&1)" = "" ]; then
             REALPATH_CMD="grealpath"
         else
-            echo "Required tool (g)realpath not found." && exit 1
+            echo "Required tool (g)realpath not found."
+
+            exit 1
         fi
     fi
     CONFIG=$(${REALPATH_CMD} "${CONFIG}")
 
     if [ ! -f "${CONFIG}" ]; then
         echo "Config missing: ${CONFIG}"
+
         exit 1;
     fi
 }
@@ -70,53 +80,70 @@ find_config
 
 validate_config()
 {
+    if [ "${VERBOSE}" = true ]; then
+        echo "validate_config"
+    fi
+
     if [ "${USER}" = "" ]; then
         echo "USER not set."
+
         exit 1;
     fi
 
     if [ "${PASSWORD}" = "" ]; then
         echo "PASSWORD not set."
+
         exit 1;
     fi
 
     if [ "${NAME}" = "" ]; then
         echo "NAME not set."
+
         exit 1;
     fi
 
     if [ "${MAIL}" = "" ]; then
         echo "MAIL not set."
+
         exit 1;
     fi
 }
 
 validate_config
 
-define_lib_vars()
+define_library_variables()
 {
-    if [ "${JENKINS_CLI}" = "" ]; then
+    if [ "${VERBOSE}" = true ]; then
+        echo "define_library_variables"
+    fi
+
+    if [ "${JENKINS_CLIENT}" = "" ]; then
         PROJECT_ROOT="${SCRIPT_DIR}/.."
         PROJECT_ROOT=$(${REALPATH_CMD} "${PROJECT_ROOT}")
-        JENKINS_CLI="${PROJECT_ROOT}/jenkins-cli.jar"
+        JENKINS_CLIENT="${PROJECT_ROOT}/jenkins-cli.jar"
     fi
 
-    if [ "${JENKINS_URL}" = "" ]; then
-        JENKINS_URL="http://localhost:8080"
+    if [ "${JENKINS_LOCATOR}" = "" ]; then
+        JENKINS_LOCATOR="http://localhost:8080"
     fi
 
-    JENKINS_CMD="java -jar ${JENKINS_CLI} -s ${JENKINS_URL} -noKeyAuth"
+    JENKINS_CMD="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -noKeyAuth"
 }
 
-define_lib_vars
+define_library_variables
 
-validate_cli()
+validate_jenkins_client()
 {
-    if [ ! -f "${JENKINS_CLI}" ]; then
-        "${SCRIPT_DIR}/../bin/get-cli.sh"
+    if [ "${VERBOSE}" = true ]; then
+        echo "validate_jenkins_client"
+    fi
 
-        if [ ! -f "${JENKINS_CLI}" ]; then
-            echo "File ${JENKINS_CLI} does not exist."
+    if [ ! -f "${JENKINS_CLIENT}" ]; then
+        "${SCRIPT_DIR}"/../bin/download-client.sh -c "${CONFIG}"
+
+        if [ ! -f "${JENKINS_CLIENT}" ]; then
+            echo "File ${JENKINS_CLIENT} does not exist."
+
             exit 1;
         fi
 
@@ -126,7 +153,7 @@ validate_cli()
 
 jenkins_auth()
 {
-    validate_cli
+    validate_jenkins_client
 
     AUTH_USER_STRING=$(${JENKINS_CMD} who-am-i | grep as)
     AUTH_USER="${AUTH_USER_STRING#Authenticated as: }"

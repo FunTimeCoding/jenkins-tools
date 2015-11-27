@@ -4,7 +4,7 @@ SCRIPT_DIR=$(cd "$(dirname "${0}")"; pwd)
 . "${SCRIPT_DIR}/../lib/jenkins.sh"
 jenkins_auth
 JOBS=$(${JENKINS_CMD} list-jobs)
-PROJECTS=$(ls "${PROJECT_DIR}")
+PROJECTS=$(ls "${PROJECT_DIRECTORY}")
 
 for PROJECT in ${PROJECTS}; do
     JOB_FOUND=0
@@ -21,7 +21,7 @@ for PROJECT in ${PROJECTS}; do
         continue
     fi
 
-    DIR="${PROJECT_DIR}/${PROJECT}"
+    DIR="${PROJECT_DIRECTORY}/${PROJECT}"
     cd "${DIR}"
 
     if [ ! -d ".git" ]; then
@@ -52,6 +52,7 @@ for PROJECT in ${PROJECTS}; do
 
     echo "!! ${PROJECT} has no CI job. Create one? y/n"
     read OPT
+
     case ${OPT} in
         y)
             echo "Creating job."
@@ -62,6 +63,7 @@ for PROJECT in ${PROJECTS}; do
             ;;
         a)
             echo "Aborted project scan."
+
             exit 0
             ;;
         *)

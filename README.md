@@ -1,21 +1,15 @@
 # Jenkins Tools
 
-
 ## Operation
 
-Specify a config file.
+Specify a config file for any command.
 
 ```sh
-./bin/script.sh -c /Users/shiin/.jenkins-tools-mine.conf
-```
-
-Additional arguments still work.
-
-```sh
+./bin/script.sh -c ~/.jenkins-tools-mine.conf
 ./bin/get-job.sh -c ~/.jenkins-tools-infra.conf mw-unit-and-integration-trunk > job.xml
 ```
 
-Upload config.
+Upload a job.
 
 ```sh
 ./bin/put-job.sh -c ~/.jenkins-tools-staging.conf job.xml
@@ -24,40 +18,55 @@ Upload config.
 
 ## Configuration
 
-Example config. Default path is ~/.jenkins-tools.conf.
+Example config. Default location is ~/.jenkins-tools.conf.
 
 ```sh
-# required
+# Required
 USER="areitzel"
-PASSWORD="insecure"
+PASSWORD="insecurePassword"
 NAME="Alexander Reitzel"
 MAIL="funtimecoding@gmail.com"
-# `JENKINS_URL` is optional and falls back to `http://localhost:8080`.
-JENKINS_URL="http://ci.dev"
-PROJECTS_DIR="/home/shiin/code"
-# LDAP configuration.
-SERVER="1.2.3.4"
+
+# Optional
+# Default for JENKINS_LOCATOR is http://localhost:8080.
+JENKINS_LOCATOR="http://ci.dev"
+PROJECTS_DIR="/home/shiin/Code"
+
+# LDAP
+SERVER="127.0.0.1"
 ROOT_DN="foo=bar"
 USER_SEARCH_BASE="foo=bar"
 USER_SEARCH="foo=bar"
 GROUP_SEARCH_BASE="foo=bar"
 MANAGER_DN="foo=bar"
-MANAGER_PASSWORD="insecure"
+MANAGER_PASSWORD="insecurePassword"
 ```
 
 
 ## Development
 
-Run any script verbosely if you want to debug it.
+Run any script with some verbose output.
 
 ```sh
 ./bin/script.sh -v
 ```
 
-Install development tools.
+Run any script in debug mode. This sets `-x`.
+
+```sh
+./bin/script.sh -d
+```
+
+Install development tools on OS X.
 
 ```sh
 brew install shellcheck
+```
+
+Install development tools on Debian.
+
+```sh
+sudo apt-get install shellcheck
 ```
 
 Run code style check.
