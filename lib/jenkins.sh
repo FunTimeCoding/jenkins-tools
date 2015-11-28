@@ -50,6 +50,10 @@ OPTIND=1
 
 find_config()
 {
+    if [ "${VERBOSE}" = true ]; then
+        echo "find_config"
+    fi
+
     if [ "${CONFIG}" = "" ]; then
         CONFIG="${HOME}/.jenkins-tools.conf"
     fi
@@ -65,6 +69,7 @@ find_config()
             exit 1
         fi
     fi
+
     CONFIG=$(${REALPATH_CMD} "${CONFIG}")
 
     if [ ! -f "${CONFIG}" ]; then
@@ -138,6 +143,10 @@ validate_jenkins_client()
         echo "validate_jenkins_client"
     fi
 
+    if [ "${VERBOSE}" = true ]; then
+        echo "validate_jenkins_client"
+    fi
+
     if [ ! -f "${JENKINS_CLIENT}" ]; then
         "${SCRIPT_DIR}"/../bin/download-client.sh -c "${CONFIG}"
 
@@ -153,6 +162,10 @@ validate_jenkins_client()
 
 jenkins_auth()
 {
+    if [ "${VERBOSE}" = true ]; then
+        echo "jenkins_auth"
+    fi
+
     validate_jenkins_client
 
     AUTH_USER_STRING=$(${JENKINS_CMD} who-am-i | grep as)
