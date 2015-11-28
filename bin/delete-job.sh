@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-SCRIPT_DIR=$(cd "$(dirname "${0}")"; pwd)
+DIR=$(dirname "${0}")
+SCRIPT_DIR=$(cd "${DIR}"; pwd)
 
 usage()
 {

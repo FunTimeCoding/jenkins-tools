@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-SCRIPT_DIR=$(cd "$(dirname "${0}")"; pwd)
+DIR=$(dirname "${0}")
+SCRIPT_DIR=$(cd "${DIR}"; pwd)
 . "${SCRIPT_DIR}/../lib/jenkins.sh"
 jenkins_auth
 # warnings log-parser cobertura rubyMetrics nodejs
