@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
 echo "Script incomplete."
-exit 1
 DIR=$(dirname "${0}")
 SCRIPT_DIR=$(cd "${DIR}"; pwd)
 
@@ -11,7 +10,7 @@ usage()
 }
 
 . "${SCRIPT_DIR}/../lib/jenkins.sh"
-BRANCHES=$(list-branches.sh)
+BRANCHES=$(list-branches.sh -c "${CONFIG}")
 echo "${BRANCHES}"
-JOBS=$("${SCRIPT_DIR}/list-jobs.sh")
+JOBS=$("${SCRIPT_DIR}"/list-jobs.sh -c "${CONFIG}")
 echo "${JOBS}"
