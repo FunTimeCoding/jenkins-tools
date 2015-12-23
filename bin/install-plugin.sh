@@ -1,13 +1,22 @@
 #!/bin/sh -e
 
-DIR=$(dirname "${0}")
-SCRIPT_DIR=$(cd "${DIR}"; pwd)
+DIRECTORY=$(dirname "${0}")
+SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 usage()
 {
     echo "Local usage: ${0} PLUGIN_NAME"
 }
 
-. "${SCRIPT_DIR}/../lib/jenkins.sh"
+PLUGIN_NAME="${1}"
+
+if [ "${PLUGIN_NAME}" = "" ]; then
+    usage
+
+    exit 1
+fi
+
+# shellcheck source=/dev/null
+. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
 jenkins_auth
-${JENKINS_CMD} install-plugin "${1}"
+${JENKINS_COMMAND} install-plugin "${PLUGIN_NAME}"

@@ -1,10 +1,11 @@
 #!/bin/sh -e
 
-DIR=$(dirname "${0}")
-SCRIPT_DIR=$(cd "${DIR}"; pwd)
-. "${SCRIPT_DIR}/../lib/jenkins.sh"
+DIRECTORY=$(dirname "${0}")
+SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+# shellcheck source=/dev/null
+. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
 jenkins_auth
-JOBS=$(${JENKINS_CMD} list-jobs)
+JOBS=$(${JENKINS_COMMAND} list-jobs)
 PROJECTS=$(ls "${PROJECT_DIRECTORY}")
 
 for PROJECT in ${PROJECTS}; do
@@ -22,8 +23,8 @@ for PROJECT in ${PROJECTS}; do
         continue
     fi
 
-    DIR="${PROJECT_DIRECTORY}/${PROJECT}"
-    cd "${DIR}"
+    SUB_DIRECTORY="${PROJECT_DIRECTORY}/${PROJECT}"
+    cd "${SUB_DIRECTORY}" || exit 1
 
     if [ ! -d ".git" ]; then
         echo "!! ${PROJECT} is no git repository."
@@ -52,12 +53,12 @@ for PROJECT in ${PROJECTS}; do
     fi
 
     echo "!! ${PROJECT} has no CI job. Create one? y/n"
-    read OPT
+    read -r OPT
 
     case ${OPT} in
         y)
             echo "Creating job."
-            "${SCRIPT_DIR}/create-job.sh ${PROJECT} ${URL}"
+            "${SCRIPT_DIRECTORY}/create-job.sh ${PROJECT} ${URL}"
             ;;
         n)
             echo "Not creating a job."

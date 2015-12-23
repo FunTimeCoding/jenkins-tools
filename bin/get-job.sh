@@ -1,20 +1,22 @@
 #!/bin/sh -e
 
-DIR=$(dirname "${0}")
-SCRIPT_DIR=$(cd "${DIR}"; pwd)
+DIRECTORY=$(dirname "${0}")
+SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 usage()
 {
     echo "Local usage: ${0} NAME"
 }
 
-. "${SCRIPT_DIR}/../lib/jenkins.sh"
+# shellcheck source=/dev/null
+. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
 jenkins_auth
+NAME="${1}"
 
-if [ "${1}" = "" ]; then
+if [ "${NAME}" = "" ]; then
     usage
+
     exit 1
 fi
 
-NAME="${1}"
-${JENKINS_CMD} get-job "${NAME}"
+${JENKINS_COMMAND} get-job "${NAME}"

@@ -1,16 +1,17 @@
 #!/bin/sh -e
 
 echo "Script incomplete."
-DIR=$(dirname "${0}")
-SCRIPT_DIR=$(cd "${DIR}"; pwd)
+DIRECTORY=$(dirname "${0}")
+SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 usage()
 {
     echo "Local usage: ${0}"
 }
 
-. "${SCRIPT_DIR}/../lib/jenkins.sh"
+# shellcheck source=/dev/null
+. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
 BRANCHES=$(list-branches.sh -c "${CONFIG}")
 echo "${BRANCHES}"
-JOBS=$("${SCRIPT_DIR}"/list-jobs.sh -c "${CONFIG}")
+JOBS=$("${SCRIPT_DIRECTORY}"/list-jobs.sh -c "${CONFIG}")
 echo "${JOBS}"

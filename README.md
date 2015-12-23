@@ -30,7 +30,7 @@ MAIL="funtimecoding@gmail.com"
 # Optional
 # Default for JENKINS_LOCATOR is http://localhost:8080.
 JENKINS_LOCATOR="http://ci.dev"
-PROJECTS_DIR="/home/shiin/Code"
+PROJECTS_DIRECTORY="/home/shiin/Code"
 
 # LDAP
 SERVER="127.0.0.1"

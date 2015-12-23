@@ -1,13 +1,14 @@
 #!/bin/sh -e
 
-DIR=$(dirname "${0}")
-SCRIPT_DIR=$(cd "${DIR}"; pwd)
+DIRECTORY=$(dirname "${0}")
+SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 usage()
 {
     echo "Local usage: ${0} JENKINS_CLI_ARGS"
 }
 
-. "${SCRIPT_DIR}/../lib/jenkins.sh"
+# shellcheck source=/dev/null
+. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
 jenkins_auth
-${JENKINS_CMD} "$@"
+${JENKINS_COMMAND} "$@"

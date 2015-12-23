@@ -1,10 +1,11 @@
 #!/bin/sh -e
 
-DIR=$(dirname "${0}")
-SCRIPT_DIR=$(cd "${DIR}"; pwd)
-. "${SCRIPT_DIR}/../lib/jenkins.sh"
+DIRECTORY=$(dirname "${0}")
+SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+# shellcheck source=/dev/null
+. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
 validate_cli
-UPDATE_LIST=$(${JENKINS_CMD} list-plugins | grep -e ')$' | awk '{ print $1 }')
+UPDATE_LIST=$(${JENKINS_COMMAND} list-plugins | grep -e ')$' | awk '{ print $1 }')
 
 if [ -z "${UPDATE_LIST}" ]; then
     echo "All plugins up to date."
@@ -17,6 +18,6 @@ fi
 
 jenkins_auth
 echo "Updating plugins."
-${JENKINS_CMD} install-plugin "${UPDATE_LIST}"
+${JENKINS_COMMAND} install-plugin "${UPDATE_LIST}"
 echo "Restarting."
-${JENKINS_CMD} safe-restart
+${JENKINS_COMMAND} safe-restart

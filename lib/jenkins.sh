@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-SCRIPT_DIR=$(cd "$(dirname "${0}")"; pwd)
+DIRECTORY=$(dirname "${0}")
+SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 CONFIG=""
 VERBOSE=false
 
@@ -59,10 +60,10 @@ find_config()
     fi
 
     if [ ! "$(command -v realpath 2>&1)" = "" ]; then
-        REALPATH_CMD="realpath"
+        REALPATH_COMMAND="realpath"
     else
         if [ ! "$(command -v grealpath 2>&1)" = "" ]; then
-            REALPATH_CMD="grealpath"
+            REALPATH_COMMAND="grealpath"
         else
             echo "Required tool (g)realpath not found."
 
@@ -70,7 +71,7 @@ find_config()
         fi
     fi
 
-    CONFIG=$(${REALPATH_CMD} "${CONFIG}")
+    CONFIG=$(${REALPATH_COMMAND} "${CONFIG}")
 
     if [ ! -f "${CONFIG}" ]; then
         echo "Config missing: ${CONFIG}"
@@ -81,6 +82,7 @@ find_config()
 
 find_config
 
+# shellcheck source=/dev/null
 . "${CONFIG}"
 
 validate_config()
@@ -123,8 +125,8 @@ define_library_variables()
     fi
 
     if [ "${JENKINS_CLIENT}" = "" ]; then
-        PROJECT_ROOT="${SCRIPT_DIR}/.."
-        PROJECT_ROOT=$(${REALPATH_CMD} "${PROJECT_ROOT}")
+        PROJECT_ROOT="${SCRIPT_DIRECTORY}/.."
+        PROJECT_ROOT=$(${REALPATH_COMMAND} "${PROJECT_ROOT}")
         JENKINS_CLIENT="${PROJECT_ROOT}/jenkins-cli.jar"
     fi
 
@@ -132,7 +134,7 @@ define_library_variables()
         JENKINS_LOCATOR="http://localhost:8080"
     fi
 
-    JENKINS_CMD="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -noKeyAuth"
+    JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -noKeyAuth"
 }
 
 define_library_variables
@@ -148,7 +150,7 @@ validate_jenkins_client()
     fi
 
     if [ ! -f "${JENKINS_CLIENT}" ]; then
-        "${SCRIPT_DIR}"/../bin/download-client.sh -c "${CONFIG}"
+        "${SCRIPT_DIRECTORY}"/../bin/download-client.sh -c "${CONFIG}"
 
         if [ ! -f "${JENKINS_CLIENT}" ]; then
             echo "File ${JENKINS_CLIENT} does not exist."
@@ -168,10 +170,10 @@ jenkins_auth()
 
     validate_jenkins_client
 
-    AUTH_USER_STRING=$(${JENKINS_CMD} who-am-i | grep as)
+    AUTH_USER_STRING=$(${JENKINS_COMMAND} who-am-i | grep as)
     AUTH_USER="${AUTH_USER_STRING#Authenticated as: }"
 
     if [ ! "${USERNAME}" = "${AUTH_USER}" ]; then
-        ${JENKINS_CMD} login --username "${USERNAME}" --password "${PASSWORD}"
+        ${JENKINS_COMMAND} login --username "${USERNAME}" --password "${PASSWORD}"
     fi
 }
