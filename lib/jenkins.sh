@@ -3,7 +3,6 @@
 DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 CONFIG=""
-VERBOSE=false
 
 function_exists()
 {
@@ -14,24 +13,15 @@ function_exists()
 
 while true; do
     case ${1} in
-        -c|--config)
+        --config)
             CONFIG=${2-}
             shift 2
             ;;
-        -h|--help)
-            echo "Global usage: [-v|--verbose][-d|--debug][-h|--help][-c|--config CONFIG]"
+        --help)
+            echo "Global usage: [--help][--config CONFIG]"
             function_exists usage && usage
 
             exit 0
-            ;;
-        -v|--verbose)
-            VERBOSE=true
-            echo "Verbose mode enabled."
-            shift
-            ;;
-        -d|--debug)
-            set -x
-            shift
             ;;
         --)
             shift
@@ -51,10 +41,6 @@ OPTIND=1
 
 find_config()
 {
-    if [ "${VERBOSE}" = true ]; then
-        echo "find_config"
-    fi
-
     if [ "${CONFIG}" = "" ]; then
         CONFIG="${HOME}/.jenkins-tools.conf"
     fi
@@ -87,10 +73,6 @@ find_config
 
 validate_config()
 {
-    if [ "${VERBOSE}" = true ]; then
-        echo "validate_config"
-    fi
-
     if [ "${USERNAME}" = "" ]; then
         echo "USERNAME not set."
 
@@ -120,10 +102,6 @@ validate_config
 
 define_library_variables()
 {
-    if [ "${VERBOSE}" = true ]; then
-        echo "define_library_variables"
-    fi
-
     if [ "${JENKINS_CLIENT}" = "" ]; then
         PROJECT_ROOT="${SCRIPT_DIRECTORY}/.."
         PROJECT_ROOT=$(${REALPATH_COMMAND} "${PROJECT_ROOT}")
@@ -141,14 +119,6 @@ define_library_variables
 
 validate_jenkins_client()
 {
-    if [ "${VERBOSE}" = true ]; then
-        echo "validate_jenkins_client"
-    fi
-
-    if [ "${VERBOSE}" = true ]; then
-        echo "validate_jenkins_client"
-    fi
-
     if [ ! -f "${JENKINS_CLIENT}" ]; then
         "${SCRIPT_DIRECTORY}"/../bin/download-client.sh -c "${CONFIG}"
 
@@ -164,13 +134,9 @@ validate_jenkins_client()
 
 jenkins_auth()
 {
-    if [ "${VERBOSE}" = true ]; then
-        echo "jenkins_auth"
-    fi
-
     validate_jenkins_client
 
-    AUTH_USER_STRING=$(${JENKINS_COMMAND} who-am-i | grep as)
+    AUTH_USER_STRING=$(${JENKINS_COMMAND} who-am-i | grep as || true)
     AUTH_USER="${AUTH_USER_STRING#Authenticated as: }"
 
     if [ ! "${USERNAME}" = "${AUTH_USER}" ]; then

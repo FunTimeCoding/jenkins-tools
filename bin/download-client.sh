@@ -13,10 +13,6 @@ fi
 
 LOCATOR="${JENKINS_LOCATOR}/jnlpJars/jenkins-cli.jar"
 
-if [ "${VERBOSE}" = true ]; then
-    echo "Download ${LOCATOR}."
-fi
-
 # Catching fails with "|| true" to determine what went wrong later.
 wget "${LOCATOR}" -O "${JENKINS_CLIENT}" > /dev/null 2>&1 || true
 
