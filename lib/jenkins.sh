@@ -112,7 +112,11 @@ define_library_variables()
         JENKINS_LOCATOR="http://localhost:8080"
     fi
 
-    JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -noKeyAuth"
+    if [ ! "${SSH_KEY}" = "" ]; then
+        JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -i ${SSH_KEY}"
+    else
+        JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -noKeyAuth"
+    fi
 }
 
 define_library_variables
@@ -136,10 +140,12 @@ jenkins_auth()
 {
     validate_jenkins_client
 
-    AUTH_USER_STRING=$(${JENKINS_COMMAND} who-am-i | grep as || true)
-    AUTH_USER="${AUTH_USER_STRING#Authenticated as: }"
+    if [ "${SSH_KEY}" = "" ]; then
+        AUTH_USER_STRING=$(${JENKINS_COMMAND} who-am-i | grep as || true)
+        AUTH_USER="${AUTH_USER_STRING#Authenticated as: }"
 
-    if [ ! "${USERNAME}" = "${AUTH_USER}" ]; then
-        ${JENKINS_COMMAND} login --username "${USERNAME}" --password "${PASSWORD}"
+        if [ ! "${USERNAME}" = "${AUTH_USER}" ]; then
+            ${JENKINS_COMMAND} login --username "${USERNAME}" --password "${PASSWORD}"
+        fi
     fi
 }

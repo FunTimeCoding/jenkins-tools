@@ -18,14 +18,15 @@ bin/put-job.sh --config ~/.jenkins-tools-staging.conf job.xml
 
 ## Configuration
 
-Example config. Default location is ~/.jenkins-tools.conf.
+Example config. The default location is `~/.jenkins-tools.conf`.
 
 ```sh
 # Required
 USERNAME=areitzel
 PASSWORD=changeme
+SSH_KEY=~/.ssh/id_rsa
 NAME="Alexander Reitzel"
-MAIL="funtimecoding@gmail.com"
+MAIL=funtimecoding@gmail.com
 
 # Optional
 # Default for JENKINS_LOCATOR is http://localhost:8080.
