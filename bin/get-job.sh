@@ -20,3 +20,4 @@ if [ "${NAME}" = "" ]; then
 fi
 
 ${JENKINS_COMMAND} get-job "${NAME}"
+echo
