@@ -47,7 +47,7 @@ for PROJECT in ${PROJECTS}; do
         continue
     fi
 
-    if [ ! -f "build.sh" ] && [ ! -f "build.xml" ]; then
+    if [ ! -f "build.sh" ]; then
         echo "!! ${PROJECT} has no build script."
         continue
     fi
@@ -58,7 +58,7 @@ for PROJECT in ${PROJECTS}; do
     case ${OPT} in
         y)
             echo "Creating job."
-            "${SCRIPT_DIRECTORY}/create-job.sh ${PROJECT} ${URL}"
+            "${SCRIPT_DIRECTORY}"/create-job.sh "${PROJECT}" "${URL}"
             ;;
         n)
             echo "Not creating a job."

@@ -5,18 +5,18 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 usage()
 {
-    echo "Local usage: ${0} NAME"
+    echo "Local usage: ${0} JOB_NAME"
 }
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
 jenkins_auth
-NAME="${1}"
+JOB_NAME="${1}"
 
-if [ "${NAME}" = "" ]; then
+if [ "${JOB_NAME}" = "" ]; then
     usage
 
     exit 1
 fi
 
-${JENKINS_COMMAND} delete-job "${NAME}"
+${JENKINS_COMMAND} delete-job "${JOB_NAME}"
