@@ -22,16 +22,19 @@ Example config. The default location is `~/.jenkins-tools.conf`.
 
 ```sh
 # Required
-USERNAME=areitzel
-PASSWORD=changeme
 SSH_KEY=~/.ssh/id_rsa
 NAME="Alexander Reitzel"
 MAIL=funtimecoding@gmail.com
 
 # Optional
 # Default for JENKINS_LOCATOR is http://localhost:8080.
+USERNAME=areitzel
+PASSWORD=changeme
 JENKINS_LOCATOR=http://ci.dev
 PROJECTS_DIRECTORY=/home/shiin/Code
+PLUGINS="git
+log-parser
+greenballs"
 
 # LDAP
 SERVER=127.0.0.1
