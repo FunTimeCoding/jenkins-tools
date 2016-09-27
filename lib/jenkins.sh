@@ -39,87 +39,73 @@ done
 
 OPTIND=1
 
-find_config()
-{
-    if [ "${CONFIG}" = "" ]; then
-        CONFIG="${HOME}/.jenkins-tools.conf"
-    fi
+if [ "${CONFIG}" = "" ]; then
+    CONFIG="${HOME}/.jenkins-tools.conf"
+fi
 
-    if [ ! "$(command -v realpath 2>&1)" = "" ]; then
-        REALPATH_COMMAND="realpath"
+if [ ! "$(command -v realpath 2>&1)" = "" ]; then
+    REALPATH_COMMAND=realpath
+else
+    if [ ! "$(command -v grealpath 2>&1)" = "" ]; then
+        REALPATH_COMMAND=grealpath
     else
-        if [ ! "$(command -v grealpath 2>&1)" = "" ]; then
-            REALPATH_COMMAND="grealpath"
-        else
-            echo "Required tool (g)realpath not found."
+        echo "Required tool (g)realpath not found."
 
-            exit 1
-        fi
+        exit 1
     fi
+fi
 
-    CONFIG=$(${REALPATH_COMMAND} "${CONFIG}")
+CONFIG=$(${REALPATH_COMMAND} "${CONFIG}")
 
-    if [ ! -f "${CONFIG}" ]; then
-        echo "Config missing: ${CONFIG}"
+if [ ! -f "${CONFIG}" ]; then
+    echo "Config missing: ${CONFIG}"
 
-        exit 1;
-    fi
-}
-
-find_config
+    exit 1
+fi
 
 # shellcheck source=/dev/null
 . "${CONFIG}"
 
-validate_config()
-{
-    if [ "${USERNAME}" = "" ]; then
-        echo "USERNAME not set."
+if [ "${USERNAME}" = "" ]; then
+    echo "USERNAME not set."
 
-        exit 1;
-    fi
+    exit 1
+fi
 
-    if [ "${PASSWORD}" = "" ]; then
-        echo "PASSWORD not set."
+if [ "${PASSWORD}" = "" ]; then
+    echo "PASSWORD not set."
 
-        exit 1;
-    fi
+    exit 1
+fi
 
-    if [ "${NAME}" = "" ]; then
-        echo "NAME not set."
+if [ "${NAME}" = "" ]; then
+    echo "NAME not set."
 
-        exit 1;
-    fi
+    exit 1
+fi
 
-    if [ "${MAIL}" = "" ]; then
-        echo "MAIL not set."
+if [ "${MAIL}" = "" ]; then
+    echo "MAIL not set."
 
-        exit 1;
-    fi
-}
+    exit 1
+fi
 
-validate_config
+if [ "${JENKINS_CLIENT}" = "" ]; then
+    PROJECT_ROOT="${SCRIPT_DIRECTORY}/.."
+    PROJECT_ROOT=$(${REALPATH_COMMAND} "${PROJECT_ROOT}")
+    JENKINS_CLIENT="${PROJECT_ROOT}/jenkins-cli.jar"
+fi
 
-define_library_variables()
-{
-    if [ "${JENKINS_CLIENT}" = "" ]; then
-        PROJECT_ROOT="${SCRIPT_DIRECTORY}/.."
-        PROJECT_ROOT=$(${REALPATH_COMMAND} "${PROJECT_ROOT}")
-        JENKINS_CLIENT="${PROJECT_ROOT}/jenkins-cli.jar"
-    fi
+if [ "${JENKINS_LOCATOR}" = "" ]; then
+    JENKINS_LOCATOR="http://localhost:8080"
+fi
 
-    if [ "${JENKINS_LOCATOR}" = "" ]; then
-        JENKINS_LOCATOR="http://localhost:8080"
-    fi
-
-    if [ ! "${SSH_KEY}" = "" ]; then
-        JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -i ${SSH_KEY}"
-    else
-        JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -noKeyAuth"
-    fi
-}
-
-define_library_variables
+if [ ! "${SSH_KEY}" = "" ]; then
+    # TODO: Remove the noCertificateCheck argument.
+    JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -i ${SSH_KEY} -noCertificateCheck"
+else
+    JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -noKeyAuth"
+fi
 
 validate_jenkins_client()
 {
@@ -129,7 +115,7 @@ validate_jenkins_client()
         if [ ! -f "${JENKINS_CLIENT}" ]; then
             echo "File ${JENKINS_CLIENT} does not exist."
 
-            exit 1;
+            exit 1
         fi
 
         return 0
