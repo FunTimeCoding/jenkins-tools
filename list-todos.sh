@@ -1,11 +1,11 @@
 #!/bin/sh -e
 
-OPERATING_SYSTEM=$(uname)
+SYSTEM=$(uname)
 
-if [ "${OPERATING_SYSTEM}" = "Linux" ]; then
-    FIND="find"
+if [ "${SYSTEM}" = Darwin ]; then
+    FIND=gfind
 else
-    FIND="gfind"
+    FIND=find
 fi
 
 # shellcheck disable=SC2016

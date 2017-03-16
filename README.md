@@ -1,6 +1,6 @@
 # JenkinsTools
 
-## Configuration
+## Setup
 
 This section explains how to configure this project.
 

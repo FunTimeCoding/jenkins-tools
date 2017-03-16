@@ -6,6 +6,7 @@ if [ "$(command -v shellcheck || true)" = "" ]; then
     exit 1
 fi
 
+CONCERN_FOUND=false
 CONTINUOUS_INTEGRATION_MODE=false
 
 if [ "${1}" = --ci-mode ]; then
@@ -14,34 +15,43 @@ if [ "${1}" = --ci-mode ]; then
     CONTINUOUS_INTEGRATION_MODE=true
 fi
 
-#     12345678901234567890123456789012345678901234567890123456789012345678901234567890
-echo "================================================================================"
-echo
+SYSTEM=$(uname)
 
-echo "Run ShellCheck."
-
-OPERATING_SYSTEM=$(uname)
-
-if [ "${OPERATING_SYSTEM}" = Darwin ]; then
+if [ "${SYSTEM}" = Darwin ]; then
     FIND=gfind
 else
     FIND=find
 fi
 
-if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-    # shellcheck disable=SC2016
-    ${FIND} . -name '*.sh' -regextype posix-extended ! -regex '^.*/(build|.git)/.*$' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \; | tee build/log/shellcheck.txt
-else
-    # shellcheck disable=SC2016
-    ${FIND} . -name '*.sh' -regextype posix-extended ! -regex '^.*/(build|.git)/.*$' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;
+# shellcheck disable=SC2016
+SHELL_SCRIPT_CONCERNS=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex '^.*/(build|\.git|tmp)/.*$' -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
+
+if [ ! "${SHELL_SCRIPT_CONCERNS}" = "" ]; then
+    CONCERN_FOUND=true
+    echo "Shell script concerns:"
+    echo "${SHELL_SCRIPT_CONCERNS}"
+
+    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+        echo "${SHELL_SCRIPT_CONCERNS}" > build/log/shellcheck.txt
+    fi
 fi
 
-echo
-echo "================================================================================"
-echo
+EMPTY_FILES=$(${FIND} . -empty -regextype posix-extended ! -regex '^.*/(build|\.git|\.vagrant|tmp)/.*$')
 
-echo "Search for empty files."
-find . -empty -and -not -path '*/.git/*' -ls
+if [ ! "${EMPTY_FILES}" = "" ]; then
+    CONCERN_FOUND=true
+    echo
+    echo "Empty files:"
+    echo
+    echo "${EMPTY_FILES}"
 
-echo
-echo "================================================================================"
+    if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+        echo "${EMPTY_FILES}" > build/log/empty-files.txt
+    fi
+fi
+
+if [ "${CONCERN_FOUND}" = true ]; then
+    echo
+    echo "Found at least one concern."
+    exit 2
+fi
