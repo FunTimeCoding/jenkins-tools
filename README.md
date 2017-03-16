@@ -1,4 +1,4 @@
-# Jenkins Tools
+# JenkinsTools
 
 ## Configuration
 
