@@ -19,7 +19,7 @@ fi
 FILES=$(find ${BACKUP_DIRECTORY} -type f)
 
 for FILE in ${FILES}; do
-    JOB_CONFIG=$(${REALPATH_COMMAND} "${FILE}")
+    JOB_CONFIG=$(${REALPATH} "${FILE}")
     JOB_NAME="${JOB_CONFIG##*/}"
     JOB_NAME="${JOB_NAME%.*}"
     echo "Create job: ${JOB_NAME}"

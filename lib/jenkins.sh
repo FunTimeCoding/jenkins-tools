@@ -41,10 +41,10 @@ if [ "${CONFIG}" = "" ]; then
 fi
 
 if [ ! "$(command -v realpath 2>&1)" = "" ]; then
-    REALPATH_COMMAND=realpath
+    REALPATH=realpath
 else
     if [ ! "$(command -v grealpath 2>&1)" = "" ]; then
-        REALPATH_COMMAND=grealpath
+        REALPATH=grealpath
     else
         echo "Required tool (g)realpath not found."
 
@@ -52,7 +52,7 @@ else
     fi
 fi
 
-CONFIG=$(${REALPATH_COMMAND} "${CONFIG}")
+CONFIG=$(${REALPATH} "${CONFIG}")
 
 if [ ! -f "${CONFIG}" ]; then
     echo "Config missing: ${CONFIG}"

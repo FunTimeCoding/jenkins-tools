@@ -7,17 +7,14 @@ This section explains how to configure this project.
 Example config. The default location is `~/.jenkins-tools.conf`.
 
 ```sh
-# Required
-SSH_KEY=~/.ssh/id_rsa
-NAME="Alexander Reitzel"
-MAIL=funtimecoding@gmail.com
-
-# Optional
 USERNAME=areitzel
 PASSWORD=changeme
-# Default: http://localhost:8080
-JENKINS_LOCATOR=http://example.org
-PROJECTS_DIRECTORY=/home/shiin/Code
+KEY=/home/example/.ssh/id_rsa
+REAL_NAME="Alexander Reitzel"
+EMAIL=funtimecoding@gmail.com
+PROJECT_DIRECTORY=/home/example/src
+HOST_NAME=ci.greenshininglake.org
+PORT=22246
 PLUGINS="git
 log-parser
 greenballs"
