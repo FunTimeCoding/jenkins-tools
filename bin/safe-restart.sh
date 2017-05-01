@@ -5,30 +5,12 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 usage()
 {
-    echo "Local usage: ${0} [-n]"
-    echo "The -n parameter tells this script to skip authentication. This should be implemetented in a more clean way."
+    echo "Local usage: ${0}"
 }
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-NO_AUTH=0
-
-while getopts "n" OPT; do
-    case "$OPT" in
-        n)
-            NO_AUTH=1
-            ;;
-    esac
-done
-
-OPTIND=1
-validate_cli
-
-if [ "${NO_AUTH}" = "0" ]; then
-    jenkins_auth
-fi
-
-${JENKINS_COMMAND} safe-restart
+${JENKINS} safe-restart
 
 for i in $(seq 1 120); do
     echo "${i}"

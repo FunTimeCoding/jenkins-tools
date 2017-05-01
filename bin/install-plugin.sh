@@ -18,5 +18,4 @@ fi
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
-${JENKINS_COMMAND} install-plugin "${PLUGIN_NAME}"
+${JENKINS} install-plugin "${PLUGIN_NAME}"

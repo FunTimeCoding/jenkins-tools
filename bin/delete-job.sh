@@ -10,7 +10,6 @@ usage()
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
 JOB_NAME="${1}"
 
 if [ "${JOB_NAME}" = "" ]; then
@@ -19,4 +18,4 @@ if [ "${JOB_NAME}" = "" ]; then
     exit 1
 fi
 
-${JENKINS_COMMAND} delete-job "${JOB_NAME}"
+${JENKINS} delete-job "${JOB_NAME}"

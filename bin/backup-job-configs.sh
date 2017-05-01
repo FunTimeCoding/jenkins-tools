@@ -10,8 +10,7 @@ usage()
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
-JOBS=$(${JENKINS_COMMAND} list-jobs)
+JOBS=$(${JENKINS} list-jobs)
 BACKUP_DIRECTORY="${1}"
 
 if [ "${BACKUP_DIRECTORY}" = "" ]; then
@@ -27,7 +26,7 @@ for JOB in ${JOBS}; do
 
     if [ ! -f "${BACKUP_DESTINATION}" ]; then
         echo "Downloading config: ${JOB}"
-        ${JENKINS_COMMAND} get-job "${JOB}" > "${BACKUP_DESTINATION}"
+        ${JENKINS} get-job "${JOB}" > "${BACKUP_DESTINATION}"
 
         if [ ! -s "${BACKUP_DESTINATION}" ]; then
             echo "File ${BACKUP_DESTINATION} is empty. Removing it to attempt to re-download it next time."

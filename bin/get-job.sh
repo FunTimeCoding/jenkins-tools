@@ -10,7 +10,6 @@ usage()
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
 JOB_NAME="${1}"
 OUTPUT_FILE="${2}"
 
@@ -21,9 +20,9 @@ if [ "${JOB_NAME}" = "" ]; then
 fi
 
 if [ "${OUTPUT_FILE}" = "" ]; then
-    ${JENKINS_COMMAND} get-job "${JOB_NAME}"
+    ${JENKINS} get-job "${JOB_NAME}"
     echo
 else
-    ${JENKINS_COMMAND} get-job "${JOB_NAME}" > "${OUTPUT_FILE}"
+    ${JENKINS} get-job "${JOB_NAME}" > "${OUTPUT_FILE}"
     echo >> "${OUTPUT_FILE}"
 fi

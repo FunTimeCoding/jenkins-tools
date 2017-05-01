@@ -10,7 +10,6 @@ usage()
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
 NODE_NAME="${1}"
 
 if [ "${NODE_NAME}" = "" ]; then
@@ -19,4 +18,4 @@ if [ "${NODE_NAME}" = "" ]; then
     exit 1
 fi
 
-${JENKINS_COMMAND} delete-node "${NODE_NAME}"
+${JENKINS} delete-node "${NODE_NAME}"

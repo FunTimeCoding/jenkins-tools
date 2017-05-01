@@ -10,7 +10,6 @@ usage()
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
 NODE_NAME="${1}"
 OUTPUT_FILE="${2}"
 
@@ -21,9 +20,9 @@ if [ "${NODE_NAME}" = "" ]; then
 fi
 
 if [ "${OUTPUT_FILE}" = "" ]; then
-    ${JENKINS_COMMAND} get-node "${NODE_NAME}"
+    ${JENKINS} get-node "${NODE_NAME}"
     echo
 else
-    ${JENKINS_COMMAND} get-node "${NODE_NAME}" > "${OUTPUT_FILE}"
+    ${JENKINS} get-node "${NODE_NAME}" > "${OUTPUT_FILE}"
     echo >> "${OUTPUT_FILE}"
 fi

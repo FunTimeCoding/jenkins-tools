@@ -29,10 +29,6 @@ while true; do
             break
             ;;
         *)
-            # TODO: Consider getting valid options from executable scripts or remove this.
-            #if [ ! "${1}" = "" ]; then
-            #    echo "Unknown option: ${1}"
-            #fi
             break
             ;;
     esac
@@ -67,6 +63,12 @@ fi
 # shellcheck source=/dev/null
 . "${CONFIG}"
 
+if [ "${KEY}" = "" ]; then
+    echo "KEY not set."
+
+    exit 1
+fi
+
 if [ "${USERNAME}" = "" ]; then
     echo "USERNAME not set."
 
@@ -79,60 +81,34 @@ if [ "${PASSWORD}" = "" ]; then
     exit 1
 fi
 
-if [ "${NAME}" = "" ]; then
-    echo "NAME not set."
+if [ "${HOST_NAME}" = "" ]; then
+    echo "HOST_NAME not set."
 
     exit 1
 fi
 
-if [ "${MAIL}" = "" ]; then
-    echo "MAIL not set."
+if [ "${PORT}" = "" ]; then
+    echo "PORT not set."
 
     exit 1
 fi
 
-if [ "${JENKINS_CLIENT}" = "" ]; then
-    PROJECT_ROOT="${SCRIPT_DIRECTORY}/.."
-    PROJECT_ROOT=$(${REALPATH_COMMAND} "${PROJECT_ROOT}")
-    JENKINS_CLIENT="${PROJECT_ROOT}/jenkins-cli.jar"
+if [ "${REAL_NAME}" = "" ]; then
+    echo "REAL_NAME not set."
+
+    exit 1
 fi
 
-if [ "${JENKINS_LOCATOR}" = "" ]; then
-    JENKINS_LOCATOR="http://localhost:8080"
+if [ "${EMAIL}" = "" ]; then
+    echo "EMAIL not set."
+
+    exit 1
 fi
 
-if [ ! "${SSH_KEY}" = "" ]; then
-    # TODO: Remove the noCertificateCheck argument.
-    JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -i ${SSH_KEY} -noCertificateCheck"
-else
-    JENKINS_COMMAND="java -jar ${JENKINS_CLIENT} -s ${JENKINS_LOCATOR} -noKeyAuth"
+if [ "${PROJECT_DIRECTORY}" = "" ]; then
+    echo "PROJECT_DIRECTORY not set."
+
+    exit 1
 fi
 
-validate_jenkins_client()
-{
-    if [ ! -f "${JENKINS_CLIENT}" ]; then
-        "${SCRIPT_DIRECTORY}"/../bin/download-client.sh -c "${CONFIG}"
-
-        if [ ! -f "${JENKINS_CLIENT}" ]; then
-            echo "File ${JENKINS_CLIENT} does not exist."
-
-            exit 1
-        fi
-
-        return 0
-    fi
-}
-
-jenkins_auth()
-{
-    validate_jenkins_client
-
-    if [ "${SSH_KEY}" = "" ]; then
-        AUTH_USER_STRING=$(${JENKINS_COMMAND} who-am-i | grep as || true)
-        AUTH_USER="${AUTH_USER_STRING#Authenticated as: }"
-
-        if [ ! "${USERNAME}" = "${AUTH_USER}" ]; then
-            ${JENKINS_COMMAND} login --username "${USERNAME}" --password "${PASSWORD}"
-        fi
-    fi
-}
+JENKINS="ssh -i ${KEY} ${HOST_NAME} -p ${PORT}"

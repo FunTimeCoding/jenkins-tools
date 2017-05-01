@@ -10,7 +10,6 @@ usage()
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
 BACKUP_DIRECTORY="${1}"
 
 if [ "${BACKUP_DIRECTORY}" = "" ]; then
@@ -24,5 +23,5 @@ for FILE in ${FILES}; do
     JOB_NAME="${JOB_CONFIG##*/}"
     JOB_NAME="${JOB_NAME%.*}"
     echo "Create job: ${JOB_NAME}"
-    ${JENKINS_COMMAND} create-job "${JOB_NAME}" < "${JOB_CONFIG}"
+    ${JENKINS} create-job "${JOB_NAME}" < "${JOB_CONFIG}"
 done

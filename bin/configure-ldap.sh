@@ -4,7 +4,6 @@ DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-validate_cli
 echo "def instance = jenkins.model.Jenkins.getInstance()
 def ldaprealm = new hudson.security.LDAPSecurityRealm (
 \"${SERVER}\",
@@ -25,4 +24,4 @@ null
 )
 instance.setSecurityRealm(ldaprealm)
 instance.setAuthorizationStrategy(new hudson.security.FullControlOnceLoggedInAuthorizationStrategy())
-instance.save()" | ${JENKINS_COMMAND} groovy =
+instance.save()" | ${JENKINS} groovy =

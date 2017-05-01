@@ -10,7 +10,6 @@ usage()
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
 JOB_NAME="${1}"
 JOB_CONFIG="${2}"
 
@@ -28,4 +27,4 @@ if [ ! -f "${JOB_CONFIG}" ]; then
     exit 1
 fi
 
-${JENKINS_COMMAND} create-job "${JOB_NAME}" < "${JOB_CONFIG}"
+${JENKINS} create-job "${JOB_NAME}" < "${JOB_CONFIG}"

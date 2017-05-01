@@ -10,5 +10,4 @@ usage()
 
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
-jenkins_auth
-${JENKINS_COMMAND} "$@"
+${JENKINS} "$@"
