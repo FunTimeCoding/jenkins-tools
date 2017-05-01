@@ -6,6 +6,7 @@ CONFIG=""
 
 function_exists()
 {
+    # shellcheck disable=SC2039
     declare -f -F "${1}" > /dev/null
 
     return $?
