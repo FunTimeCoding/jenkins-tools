@@ -36,8 +36,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>export PATH="${HOME}/.cabal/bin:${HOME}/.local/bin:/usr/local/bin:${PATH}"
-./build.sh</command>
+      <command>./build.sh</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
