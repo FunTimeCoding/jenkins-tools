@@ -14,7 +14,7 @@ fi
 LOCATOR="${JENKINS_LOCATOR}/jnlpJars/jenkins-cli.jar"
 
 # Catching fails with "|| true" to determine what went wrong later.
-wget "${LOCATOR}" -O "${JENKINS_CLIENT}" > /dev/null 2>&1 || true
+wget --no-check-certificate --output-document "${JENKINS_CLIENT}" "${LOCATOR}" > /dev/null 2>&1 || true
 
 if [ ! -f "${JENKINS_CLIENT}" ]; then
     echo "File ${JENKINS_CLIENT} could not be downloaded."
@@ -23,7 +23,7 @@ if [ ! -f "${JENKINS_CLIENT}" ]; then
 fi
 
 if [ ! -s "${JENKINS_CLIENT}" ]; then
-    echo "File ${JENKINS_CLIENT} is empty. Deleted it to attempt to re-download it next time."
+    echo "File ${JENKINS_CLIENT} was empty."
     rm "${JENKINS_CLIENT}"
 
     exit 1
