@@ -4,7 +4,7 @@
 
 This section explains how to configure this project.
 
-Example config. The default location is `~/.jenkins-tools.conf`.
+Example config. The default location is ~/.jenkins-tools.conf.
 
 ```sh
 USERNAME=example
@@ -17,7 +17,7 @@ PLUGINS="git
 log-parser
 greenballs"
 
-# LDAP
+# Optional directory service
 SERVER=127.0.0.1
 ROOT_DN=foo=bar
 USER_SEARCH_BASE=foo=bar
