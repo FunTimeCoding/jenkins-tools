@@ -93,20 +93,8 @@ if [ "${PORT}" = "" ]; then
     exit 1
 fi
 
-if [ "${REAL_NAME}" = "" ]; then
-    echo "REAL_NAME not set."
-
-    exit 1
-fi
-
 if [ "${EMAIL}" = "" ]; then
     echo "EMAIL not set."
-
-    exit 1
-fi
-
-if [ "${PROJECT_DIRECTORY}" = "" ]; then
-    echo "PROJECT_DIRECTORY not set."
 
     exit 1
 fi
