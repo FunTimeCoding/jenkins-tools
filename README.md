@@ -30,6 +30,12 @@ MANAGER_PASSWORD=changeme
 
 ## Usage
 
+Run the main program.
+
+```sh
+bin/jt
+```
+
 This section explains how to use this project.
 
 Upload a job.
