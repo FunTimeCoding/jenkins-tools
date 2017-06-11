@@ -12,18 +12,15 @@ usage()
 . "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
 ${JENKINS} safe-restart
 
-for i in $(seq 1 120); do
-    echo "${i}"
+for SECOND in $(seq 1 120); do
+    echo "${SECOND}"
     sleep 1
-    # Somewhere in the middle of the restart, curl would abort. That's why there is the "|| true".
-    # Might not be the most clean way. Feel free to improve on it.
-    HTTP_RESULT_CODE=$(curl -s -o /dev/null -w "%{http_code}" "${JENKINS_LOCATOR}/cli/" || true)
+    STATUS_CODE=$(curl --insecure --silent --output /dev/null --write-out '%{http_code}' "https://${HOST_NAME}/cli/" || true)
 
-    if [ "${HTTP_RESULT_CODE}" = "200" ]; then
-        echo "Restart complete."
+    if [ "${STATUS_CODE}" = 200 ]; then
         exit 0
     fi
 done
 
-echo "Timeout reached, restart incomplete."
+echo "Timeout reached."
 exit 1
