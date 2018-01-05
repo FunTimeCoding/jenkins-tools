@@ -18,5 +18,5 @@ if [ "${SCRIPT_FILE}" = "" ]; then
 	exit 1;
 fi
 
-CONTENTS=$(cat ${SCRIPT_FILE})
+CONTENTS=$(cat "${SCRIPT_FILE}")
 curl --insecure --user "${USERNAME}:${PASSWORD}" --data-urlencode "script=${CONTENTS}" "https://${HOST_NAME}/scriptText"

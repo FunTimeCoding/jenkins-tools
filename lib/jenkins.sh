@@ -87,3 +87,4 @@ if [ "${EMAIL}" = "" ]; then
 fi
 
 JENKINS="ssh -i ${KEY} ${USERNAME}@${HOST_NAME} -p ${PORT}"
+export JENKINS
