@@ -35,7 +35,7 @@ if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
     FILES=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -printf '%P\n')
 
     for FILE in ${FILES}; do
-        FILE_REPLACED=$(echo "${FILE}" | sed 's/\//-/')
+        FILE_REPLACED=$(echo "${FILE}" | sed 's/\//-/g')
         shellcheck --format checkstyle "${FILE}" > "build/log/checkstyle-${FILE_REPLACED}.xml" || true
     done
 else

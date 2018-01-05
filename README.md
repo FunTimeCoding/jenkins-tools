@@ -30,24 +30,12 @@ MANAGER_PASSWORD=changeme
 
 ## Usage
 
-Run the main program.
-
-```sh
-bin/jt
-```
-
 This section explains how to use this project.
 
 Upload a job.
 
 ```sh
 bin/put-job.sh job.xml
-```
-
-Specify a config file for any command.
-
-```sh
-bin/list-jobs.sh --config ~/.jenkins-tools-mine.conf
 ```
 
 
