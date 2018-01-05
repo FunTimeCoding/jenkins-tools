@@ -30,7 +30,7 @@ done
 OPTIND=1
 
 if [ "${CONFIG}" = "" ]; then
-    CONFIG="${HOME}/.jenkins-tools.conf"
+    CONFIG="${HOME}/.jenkins-tools.sh"
 fi
 
 if [ ! -f "${CONFIG}" ]; then

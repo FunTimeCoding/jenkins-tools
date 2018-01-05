@@ -4,7 +4,7 @@
 
 This section explains how to configure this project.
 
-Example config. The default location is ~/.jenkins-tools.conf.
+Example config. The default location is ~/.jenkins-tools.sh.
 
 ```sh
 USERNAME=example
