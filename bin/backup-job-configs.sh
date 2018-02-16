@@ -17,7 +17,6 @@ if [ "${BACKUP_DIRECTORY}" = "" ]; then
     BACKUP_DIRECTORY=job-backups
 fi
 
-BACKUP_DIRECTORY=$(${REALPATH} ${BACKUP_DIRECTORY})
 mkdir -p "${BACKUP_DIRECTORY}"
 echo "Backup will be stored in: ${BACKUP_DIRECTORY}"
 

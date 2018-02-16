@@ -19,8 +19,6 @@ if [ "${JOB_NAME}" = "" ] || [ "${JOB_CONFIG}" = "" ]; then
     exit 1
 fi
 
-JOB_CONFIG=$(${REALPATH} "${JOB_CONFIG}")
-
 if [ ! -f "${JOB_CONFIG}" ]; then
     echo "Config not found: ${JOB_CONFIG}"
 
