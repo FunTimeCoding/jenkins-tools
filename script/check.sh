@@ -1,11 +1,5 @@
 #!/bin/sh -e
 
-if [ "$(command -v shellcheck || true)" = "" ]; then
-    echo "Command not found: shellcheck"
-
-    exit 1
-fi
-
 if [ "${1}" = --help ]; then
     echo "Usage: ${0} [--ci-mode]"
 
@@ -24,12 +18,12 @@ fi
 SYSTEM=$(uname)
 
 if [ "${SYSTEM}" = Darwin ]; then
-    FIND=gfind
+    FIND="gfind"
 else
-    FIND=find
+    FIND="find"
 fi
 
-FILTER="^.*/(build|tmp|\.git|\.vagrant|\.idea)/.*$"
+FILTER='^.*/(build|tmp|\.git|\.vagrant|\.idea)/.*$'
 
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
     FILES=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -printf '%P\n')
