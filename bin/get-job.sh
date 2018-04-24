@@ -19,6 +19,7 @@ if [ "${JOB_NAME}" = "" ]; then
     exit 1
 fi
 
+# This condition exists to ensure a new line at end of file.
 if [ "${OUTPUT_FILE}" = "" ]; then
     ${JENKINS} get-job "${JOB_NAME}"
     echo
