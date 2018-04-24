@@ -42,20 +42,6 @@ fi
 # shellcheck source=/dev/null
 . "${CONFIGURATION}"
 
-if [ "${KEY}" = "" ]; then
-    echo "KEY not set."
-
-    exit 1
-else
-    test -f "${KEY}" && FOUND=true || FOUND=false
-
-    if [ "${FOUND}" = false ]; then
-        echo "Key does not exist: ${KEY}"
-
-        exit 1
-    fi
-fi
-
 if [ "${USERNAME}" = "" ]; then
     echo "USERNAME not set."
 
@@ -86,5 +72,18 @@ if [ "${EMAIL}" = "" ]; then
     exit 1
 fi
 
-JENKINS="ssh -i ${KEY} ${USERNAME}@${HOST_NAME} -p ${PORT}"
+if [ "${KEY}" = "" ]; then
+    JENKINS="ssh  ${USERNAME}@${HOST_NAME} -p ${PORT}"
+else
+    test -f "${KEY}" && FOUND=true || FOUND=false
+
+    if [ "${FOUND}" = false ]; then
+        echo "Key does not exist: ${KEY}"
+
+        exit 1
+    fi
+
+    JENKINS="ssh -i ${KEY} ${USERNAME}@${HOST_NAME} -p ${PORT}"
+fi
+
 export JENKINS
