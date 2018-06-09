@@ -2,7 +2,11 @@
 
 ## Setup
 
-This section explains how to configure this project.
+Install project dependencies.
+
+```sh
+script/setup.sh
+```
 
 Example config. The default location is ~/.jenkins-tools.sh.
 
@@ -30,7 +34,13 @@ MANAGER_PASSWORD=changeme
 
 ## Usage
 
-This section explains how to use this project.
+This section explains how to use the project.
+
+Run the main program.
+
+```sh
+bin/jt
+```
 
 Upload a job.
 
@@ -41,15 +51,39 @@ bin/put-job.sh job.xml
 
 ## Development
 
-This section explains how to use scripts that are intended to ease the development of this project.
+This section explains how to improve the project.
+
+Configure Git on Windows before cloning. This avoids problems with Vagrant and VirtualBox.
+
+```sh
+git config --global core.autocrlf input
+```
+
+Create the development virtual machine on Linux and Darwin.
+
+```sh
+script/vagrant/create.sh
+```
+
+Create the development virtual machine on Windows.
+
+```bat
+script\vagrant\create.bat
+```
+
+Run tests.
+
+```sh
+script/test.sh [--help]
+```
 
 Run style check.
 
 ```sh
-script/check.sh
+script/check.sh [--help]
 ```
 
-Build the project like Jenkins.
+Build project.
 
 ```sh
 script/build.sh

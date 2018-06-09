@@ -1,2 +1,4 @@
 build
-job-backups*
+tmp
+.vagrant
+job-backups

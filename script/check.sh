@@ -18,9 +18,9 @@ fi
 SYSTEM=$(uname)
 
 if [ "${SYSTEM}" = Darwin ]; then
-    FIND="gfind"
+    FIND='gfind'
 else
-    FIND="find"
+    FIND='find'
 fi
 
 FILTER='^.*/(build|tmp|\.git|\.vagrant|\.idea)/.*$'
@@ -36,7 +36,7 @@ else
     # shellcheck disable=SC2016
     SHELL_SCRIPT_CONCERNS=$(${FIND} . -name '*.sh' -regextype posix-extended ! -regex "${FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
 
-    if [ ! "${SHELL_SCRIPT_CONCERNS}" = "" ]; then
+    if [ ! "${SHELL_SCRIPT_CONCERNS}" = '' ]; then
         CONCERN_FOUND=true
         echo "(WARNING) Shell script concerns:"
         echo "${SHELL_SCRIPT_CONCERNS}"
@@ -44,9 +44,9 @@ else
 fi
 
 # shellcheck disable=SC2016
-EMPTY_FILES=$(${FIND} . -empty -regextype posix-extended ! -regex "${FILTER}")
+EMPTY_FILES=$(${FIND} . -type f -empty -regextype posix-extended ! -regex "${FILTER}")
 
-if [ ! "${EMPTY_FILES}" = "" ]; then
+if [ ! "${EMPTY_FILES}" = '' ]; then
     CONCERN_FOUND=true
 
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
@@ -62,7 +62,7 @@ fi
 # shellcheck disable=SC2016
 TO_DOS=$(${FIND} . -regextype posix-extended -type f -and ! -regex "${FILTER}" -exec sh -c 'grep -Hrn TODO "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
-if [ ! "${TO_DOS}" = "" ]; then
+if [ ! "${TO_DOS}" = '' ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         echo "${TO_DOS}" > build/log/to-dos.txt
     else
@@ -76,7 +76,7 @@ fi
 # shellcheck disable=SC2016
 SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f -and ! -regex "${FILTER}" -exec sh -c 'grep -Hrn "# shellcheck" "${1}" | grep -v "${2}"' '_' '{}' '${0}' \;)
 
-if [ ! "${SHELLCHECK_IGNORES}" = "" ]; then
+if [ ! "${SHELLCHECK_IGNORES}" = '' ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
         echo "${SHELLCHECK_IGNORES}" > build/log/shellcheck-ignores.txt
     else
