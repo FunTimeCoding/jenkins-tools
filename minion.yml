@@ -1,5 +1,5 @@
 file_client: local
-# Lessen the chance of running into timeouts when the load is high.
+# Reduce chance of timeout during high load.
 timeout: 30
 file_roots:
   base:
