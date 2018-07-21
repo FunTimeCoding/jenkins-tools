@@ -9,7 +9,7 @@ usage()
 }
 
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
+. "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 SCRIPT_FILE="${1}"
 
 if [ "${SCRIPT_FILE}" = "" ]; then

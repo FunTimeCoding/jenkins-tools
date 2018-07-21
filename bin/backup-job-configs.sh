@@ -9,7 +9,7 @@ usage()
 }
 
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
+. "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 JOBS=$(${JENKINS} list-jobs)
 BACKUP_DIRECTORY="${1}"
 

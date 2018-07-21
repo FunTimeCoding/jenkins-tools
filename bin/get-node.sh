@@ -9,7 +9,7 @@ usage()
 }
 
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
+. "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 NODE_NAME="${1}"
 OUTPUT_FILE="${2}"
 

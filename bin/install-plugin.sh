@@ -17,5 +17,5 @@ if [ "${PLUGIN_NAME}" = "" ]; then
 fi
 
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
+. "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 ${JENKINS} install-plugin "${PLUGIN_NAME}"

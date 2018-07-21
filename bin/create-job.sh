@@ -9,7 +9,7 @@ usage()
 }
 
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
+. "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 REPOSITORY_LOCATOR="${1}"
 
 if [ "${REPOSITORY_LOCATOR}" = "" ]; then

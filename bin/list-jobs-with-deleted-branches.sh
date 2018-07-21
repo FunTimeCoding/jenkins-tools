@@ -10,7 +10,7 @@ usage()
 }
 
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
+. "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 BRANCHES=$(list-branches.sh -c "${CONFIG}")
 echo "${BRANCHES}"
 JOBS=$("${SCRIPT_DIRECTORY}"/list-jobs.sh -c "${CONFIG}")

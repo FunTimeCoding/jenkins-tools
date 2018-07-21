@@ -3,7 +3,7 @@
 DIRECTORY=$(dirname "${0}")
 SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../lib/jenkins.sh"
+. "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 echo "def allowSignup = false
 def realm = new hudson.security.HudsonPrivateSecurityRealm(allowSignup)
 def user = realm.createAccount(\"${USERNAME}\", \"${PASSWORD}\")
