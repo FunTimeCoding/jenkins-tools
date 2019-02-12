@@ -22,7 +22,7 @@ fi
 if [ "${REASON}" = '' ]; then
     ${JENKINS} offline-node "${NODE_NAME}"
 else
-    ${JENKINS} offline-node "${NODE_NAME}" -v "${REASON}"
+    ${JENKINS} offline-node "${NODE_NAME}" -m "${REASON}"
 fi
 
 echo
