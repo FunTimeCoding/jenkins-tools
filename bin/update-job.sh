@@ -13,7 +13,7 @@ usage()
 JOB_NAME="${1}"
 JOB_CONFIG="${2}"
 
-if [ "${JOB_NAME}" = "" ] || [ "${JOB_CONFIG}" = "" ]; then
+if [ "${JOB_NAME}" = '' ] || [ "${JOB_CONFIG}" = '' ]; then
     usage
 
     exit 1

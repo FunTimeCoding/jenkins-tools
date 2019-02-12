@@ -12,7 +12,7 @@ usage()
 . "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 REPOSITORY_LOCATOR="${1}"
 
-if [ "${REPOSITORY_LOCATOR}" = "" ]; then
+if [ "${REPOSITORY_LOCATOR}" = '' ]; then
     usage
 
     exit 1;

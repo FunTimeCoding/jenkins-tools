@@ -13,13 +13,13 @@ usage()
 NODE_NAME="${1}"
 OUTPUT_FILE="${2}"
 
-if [ "${NODE_NAME}" = "" ]; then
+if [ "${NODE_NAME}" = '' ]; then
     usage
 
     exit 1
 fi
 
-if [ "${OUTPUT_FILE}" = "" ]; then
+if [ "${OUTPUT_FILE}" = '' ]; then
     ${JENKINS} get-node "${NODE_NAME}"
     echo
 else

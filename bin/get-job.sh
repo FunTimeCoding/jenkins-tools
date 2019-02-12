@@ -13,14 +13,14 @@ usage()
 JOB_NAME="${1}"
 OUTPUT_FILE="${2}"
 
-if [ "${JOB_NAME}" = "" ]; then
+if [ "${JOB_NAME}" = '' ]; then
     usage
 
     exit 1
 fi
 
 # This condition exists to ensure a new line at end of file.
-if [ "${OUTPUT_FILE}" = "" ]; then
+if [ "${OUTPUT_FILE}" = '' ]; then
     ${JENKINS} get-job "${JOB_NAME}"
     echo
 else

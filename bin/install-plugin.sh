@@ -10,7 +10,7 @@ usage()
 
 PLUGIN_NAME="${1}"
 
-if [ "${PLUGIN_NAME}" = "" ]; then
+if [ "${PLUGIN_NAME}" = '' ]; then
     usage
 
     exit 1

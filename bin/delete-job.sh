@@ -12,7 +12,7 @@ usage()
 . "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 JOB_NAME="${1}"
 
-if [ "${JOB_NAME}" = "" ]; then
+if [ "${JOB_NAME}" = '' ]; then
     usage
 
     exit 1

@@ -13,7 +13,7 @@ usage()
 NEW_NODE_NAME="${1}"
 NODE_CONFIGURATION="${2}"
 
-if [ "${NEW_NODE_NAME}" = "" ] || [ "${NODE_CONFIGURATION}" = "" ]; then
+if [ "${NEW_NODE_NAME}" = '' ] || [ "${NODE_CONFIGURATION}" = "" ]; then
     usage
 
     exit 1;

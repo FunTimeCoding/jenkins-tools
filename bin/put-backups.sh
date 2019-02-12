@@ -12,7 +12,7 @@ usage()
 . "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 BACKUP_DIRECTORY="${1}"
 
-if [ "${BACKUP_DIRECTORY}" = "" ]; then
+if [ "${BACKUP_DIRECTORY}" = '' ]; then
     BACKUP_DIRECTORY=job-backups
 fi
 
