@@ -1,14 +1,10 @@
 #!/bin/sh -e
 
 mkdir -p tmp/salt
-hostname -f > tmp/domain.txt
-cp minion.yaml tmp/salt/minion
+cp configuration/minion.yaml tmp/salt/minion.conf
 
 if [ ! -f tmp/bootstrap-salt.sh ]; then
-    curl --silent --location https://bootstrap.saltstack.com > tmp/bootstrap-salt.sh
+    wget --output-document tmp/bootstrap-salt.sh https://bootstrap.saltstack.com
 fi
 
 vagrant up
-# TODO: Find a better way to ensure that the network is properly configured.
-sleep 5
-script/vagrant/update-hosts.sh

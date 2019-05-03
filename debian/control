@@ -1,0 +1,15 @@
+Source: jenkins-tools
+Section: misc
+Priority: optional
+Maintainer: Alexander Reitzel <funtimecoding@gmail.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.8
+Homepage: https://github.com/FunTimeCoding/jenkins-tools
+Vcs-Browser: https://github.com/FunTimeCoding/jenkins-tools
+Vcs-Git: https://github.com/FunTimeCoding/jenkins-tools.git
+
+Package: jenkins-tools
+Architecture: any
+Depends: ${misc:Depends}
+Description: short stub description
+ Long stub description.

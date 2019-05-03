@@ -1,0 +1,4 @@
+---
+- template:
+    dest: /tmp/ansible-example.txt
+    src: example.txt

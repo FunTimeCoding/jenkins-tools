@@ -1,1 +1,6 @@
 Debian
+debhelper
+shlibs
+dpkg
+substvars
+listfiles

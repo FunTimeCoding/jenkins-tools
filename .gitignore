@@ -1,4 +1,9 @@
 build
 tmp
 .vagrant
-job-backups
+debian/files
+debian/debhelper-build-stamp
+debian/jenkins-tools
+debian/jenkins-tools.substvars
+documentation/man/*.1
+.scannerwork

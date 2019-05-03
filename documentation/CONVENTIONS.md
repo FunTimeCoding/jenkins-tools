@@ -7,12 +7,13 @@ This document covers conventions.
 
 ### Directories
 
-Unified directories for jenkins-tools based projects.
+Directories for projects based on the skeleton for this language.
 
 * bin - Entry point scripts.
 * lib - Project code used by more than one entry point script.
 * documentation - Documentation files.
 * documentation/dictionary - Dictionary files.
+* script - Development scripts to build, check, manage job configuration and vagrant.
 * build - Files, executables and reports generated during build.
 * tmp - Temporary files.
 
@@ -41,10 +42,10 @@ Use long forms of abbreviations and acronyms.
 Do not separate words.
 
 ```
-Upper Case Separated => UppserCaseSeparated
+Upper Case Separated => UpperCaseSeparated
 lower case separated => LowerCaseSeparated
 Generic Lib => GenericLibrary
-XML Library => ExtensibleMarkubLanguageLibrary
+XML Library => ExtensibleMarkupLanguageLibrary
 ```
 
 

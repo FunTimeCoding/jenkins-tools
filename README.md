@@ -2,6 +2,8 @@
 
 ## Setup
 
+This section explains how to install and uninstall the project.
+
 Install project dependencies.
 
 ```sh
@@ -71,20 +73,27 @@ Create the development virtual machine on Windows.
 script\vagrant\create.bat
 ```
 
-Run tests.
-
-```sh
-script/test.sh [--help]
-```
-
-Run style check.
+Run style check and metrics.
 
 ```sh
 script/check.sh [--help]
+script/measure.sh [--help]
 ```
 
 Build project.
 
 ```sh
 script/build.sh
+```
+
+Install Debian package.
+
+```sh
+sudo dpkg --install build/jenkins-tools_0.1.0-1_all.deb
+```
+
+Show files the package installed.
+
+```sh
+dpkg-query --listfiles jenkins-tools
 ```

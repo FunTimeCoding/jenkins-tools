@@ -8,5 +8,5 @@ if [ "${CODENAME}" = jessie ]; then
     dpkg-reconfigure --frontend noninteractive tzdata
     apt-get --quiet 2 install vim multitail htop tree git
 elif [ "${CODENAME}" = stretch ]; then
-    apt-get --quiet 2 install neovim multitail htop tree git shellcheck
+    apt-get --quiet 2 install neovim multitail htop tree git shellcheck hunspell devscripts ruby-ronn
 fi

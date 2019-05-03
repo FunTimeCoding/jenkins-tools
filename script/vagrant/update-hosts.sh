@@ -13,10 +13,10 @@ fi
 DOMAIN=$(hostname -f)
 HOST_NAME=$(cat tmp/hostname.txt)
 ABSOLUTE_DOMAIN_NAME="${HOST_NAME}.${DOMAIN}"
-RESULT=$(grep "${ABSOLUTE_DOMAIN_NAME}" /etc/hosts) || RESULT=""
+RESULT=$(grep "${ABSOLUTE_DOMAIN_NAME}" /etc/hosts) || RESULT=''
 ADDRESS=$(vagrant ssh -c "ip addr list eth1 | grep 'inet ' | cut -d ' ' -f6 | cut -d / -f1" 2> /dev/null | tr -d '\r')
 
-if [ "${RESULT}" = "" ]; then
+if [ "${RESULT}" = '' ]; then
     # shellcheck disable=SC1117
     printf "%s\t%s\n" "${ADDRESS}" "${ABSOLUTE_DOMAIN_NAME}" | sudo ${TEE} --append /etc/hosts > /dev/null
 else
