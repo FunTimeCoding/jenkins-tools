@@ -8,3 +8,4 @@ if [ ! -f tmp/bootstrap-salt.sh ]; then
 fi
 
 vagrant up
+script/vagrant/update-hosts.sh
