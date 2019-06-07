@@ -4,3 +4,9 @@
 [submodule "roles/jenkins"]
 	path = roles/jenkins
 	url = git@github.com:FunTimeCoding/ansible-jenkins.git
+[submodule "roles/vagrant-root-user"]
+	path = roles/vagrant-root-user
+	url = ssh://git@vc.shiin.org:2222/devops/ansible-vagrant-root-user.git
+[submodule "roles/vagrant-user"]
+	path = roles/vagrant-user
+	url = ssh://git@vc.shiin.org:2222/devops/ansible-vagrant-user.git
