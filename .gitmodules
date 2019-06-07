@@ -10,3 +10,6 @@
 [submodule "roles/vagrant-user"]
 	path = roles/vagrant-user
 	url = ssh://git@vc.shiin.org:2222/devops/ansible-vagrant-user.git
+[submodule "roles/java"]
+	path = roles/java
+	url = ssh://git@vc.shiin.org:2222/devops/ansible-java.git
