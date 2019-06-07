@@ -1,3 +1,6 @@
 [submodule "salt-provisioning"]
 	path = salt-provisioning
 	url = ssh://git@vc.shiin.org:2222/devops/salt-provisioning.git
+[submodule "roles/jenkins"]
+	path = roles/jenkins
+	url = git@github.com:FunTimeCoding/ansible-jenkins.git
