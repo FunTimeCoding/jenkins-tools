@@ -1,5 +1,6 @@
 Vagrant.configure('2') do |c|
   c.vm.box = 'debian/stretch64'
+  c.ssh.forward_agent = true
   Dir.mkdir('tmp') unless File.exist?('tmp')
 
   if File.exist?('tmp/ethernet-device.txt')
