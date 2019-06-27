@@ -8,9 +8,6 @@ HOST_NAME=$(cat tmp/hostname.txt)
 HOST="${HOST_NAME}.${DOMAIN}"
 echo "Username: admin"
 echo "Password: admin"
-echo "Initial admin password, if it still exists:"
-vagrant ssh --command 'sudo cat /var/lib/jenkins/secrets/initialAdminPassword' || true
-
 SYSTEM=$(uname)
 
 if [ "${SYSTEM}" = Darwin ]; then

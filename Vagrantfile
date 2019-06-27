@@ -57,6 +57,12 @@ Vagrant.configure('2') do |c|
         'headless': true,
         'development': false,
         'version': 8
+      },
+      'jenkins': {
+        'enabled': true,
+        'admin': {
+          'password': 'admin'
+        }
       }
     }
     # Allow remote_user: root.
