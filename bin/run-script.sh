@@ -5,7 +5,7 @@ SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
 
 usage()
 {
-	echo "Local usage: ${0} SCRIPT_FILE"
+    echo "Local usage: ${0} SCRIPT_FILE"
 }
 
 # shellcheck source=/dev/null
@@ -13,9 +13,9 @@ usage()
 SCRIPT_FILE="${1}"
 
 if [ "${SCRIPT_FILE}" = '' ]; then
-	usage
+    usage
 
-	exit 1;
+    exit 1
 fi
 
 CONTENTS=$(cat "${SCRIPT_FILE}")
