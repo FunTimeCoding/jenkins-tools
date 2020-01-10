@@ -24,7 +24,7 @@ for JOB in ${JOBS}; do
     BACKUP_DESTINATION="${BACKUP_DIRECTORY}/${JOB}.xml"
 
     if [ ! -f "${BACKUP_DESTINATION}" ]; then
-        echo "Downloading config: ${JOB}"
+        echo "Downloading configuration: ${JOB}"
         ${JENKINS} get-job "${JOB}" > "${BACKUP_DESTINATION}"
 
         if [ ! -s "${BACKUP_DESTINATION}" ]; then

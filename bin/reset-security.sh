@@ -1,15 +1,15 @@
 #!/bin/sh -e
-# This script basically does this: https://wiki.jenkins-ci.org/display/JENKINS/Disable+security
+# Script for: https://wiki.jenkins-ci.org/display/JENKINS/Disable+security
 
 SYSTEM=$(uname)
 
 if [ "${SYSTEM}" = Darwin ]; then
-    JENKINS_CONFIG="${HOME}/.jenkins/config.xml"
+    JENKINS_CONFIGURATION="${HOME}/.jenkins/config.xml"
 else
-    JENKINS_CONFIG=/var/lib/jenkins/config.xml
+    JENKINS_CONFIGURATION=/var/lib/jenkins/config.xml
 fi
 
-ENABLED=$(xml sel --template --value-of /hudson/useSecurity "${JENKINS_CONFIG}")
+ENABLED=$(xml sel --template --value-of /hudson/useSecurity "${JENKINS_CONFIGURATION}")
 
 if [ "${ENABLED}" = false ]; then
     echo "Security is already disabled."
