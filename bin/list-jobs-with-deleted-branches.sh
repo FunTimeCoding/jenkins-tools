@@ -2,10 +2,12 @@
 
 echo "Script incomplete."
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 
-usage()
-{
+usage() {
     echo "Local usage: ${0}"
 }
 

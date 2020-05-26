@@ -1,10 +1,12 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 
-usage()
-{
+usage() {
     echo "Local usage: ${0} [BACKUP_DIRECTORY]"
 }
 
@@ -22,5 +24,5 @@ for FILE in ${FILES}; do
     JOB_NAME="${FILE##*/}"
     JOB_NAME="${JOB_NAME%.*}"
     echo "Create job: ${JOB_NAME}"
-    ${JENKINS} create-job "${JOB_NAME}" < "${FILE}"
+    ${JENKINS} create-job "${JOB_NAME}" <"${FILE}"
 done

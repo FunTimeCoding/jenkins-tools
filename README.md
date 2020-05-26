@@ -2,15 +2,13 @@
 
 ## Setup
 
-This section explains how to install and uninstall the project.
-
-Install project dependencies.
+Install project dependencies:
 
 ```sh
 script/setup.sh
 ```
 
-Example config. The default location is ~/.jenkins-tools.sh.
+Example configuration:
 
 ```sh
 USERNAME=example
@@ -33,66 +31,71 @@ MANAGER_DN=foo=bar
 MANAGER_PASSWORD=changeme
 ```
 
+The default location is ~/.jenkins-tools.sh.
+
 
 ## Usage
 
-This section explains how to use the project.
-
-Run the main program.
+Run the main program:
 
 ```sh
 bin/jt
 ```
 
-Upload a job.
+Run the main program inside the container:
 
 ```sh
-bin/put-job.sh job.xml
+docker run -it --rm funtimecoding/jenkins-tools
 ```
 
 
 ## Development
 
-This section explains how to improve the project.
-
-Configure Git on Windows before cloning. This avoids problems with Vagrant and VirtualBox.
+Configure Git on Windows before cloning:
 
 ```sh
 git config --global core.autocrlf input
 ```
 
-Create the development virtual machine on Linux and Darwin.
+Install NFS plug-in for Vagrant on Windows:
+
+```bat
+vagrant plugin install vagrant-winnfsd
+```
+
+Create the development virtual machine on Linux and Darwin:
 
 ```sh
 script/vagrant/create.sh
 ```
 
-Create the development virtual machine on Windows.
+Create the development virtual machine on Windows:
 
 ```bat
 script\vagrant\create.bat
 ```
 
-Run style check and metrics.
+Run tests, style check and metrics:
 
 ```sh
+script/test.sh [--help]
 script/check.sh [--help]
 script/measure.sh [--help]
 ```
 
-Build project.
+Build project:
 
 ```sh
 script/build.sh
 ```
 
-Install Debian package.
+Install Debian package:
 
 ```sh
 sudo dpkg --install build/jenkins-tools_0.1.0-1_all.deb
 ```
 
-Show files the package installed.
+Show files the package installed:
 
 ```sh
 dpkg-query --listfiles jenkins-tools

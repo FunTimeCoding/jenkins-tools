@@ -1,10 +1,12 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 
-usage()
-{
+usage() {
     echo "Local usage: ${0} BACKUP_DIRECTORY"
 }
 
@@ -25,7 +27,7 @@ for JOB in ${JOBS}; do
 
     if [ ! -f "${BACKUP_DESTINATION}" ]; then
         echo "Downloading configuration: ${JOB}"
-        ${JENKINS} get-job "${JOB}" > "${BACKUP_DESTINATION}"
+        ${JENKINS} get-job "${JOB}" >"${BACKUP_DESTINATION}"
 
         if [ ! -s "${BACKUP_DESTINATION}" ]; then
             echo "File ${BACKUP_DESTINATION} is empty. Removing it to attempt to re-download it next time."

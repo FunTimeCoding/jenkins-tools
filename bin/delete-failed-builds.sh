@@ -1,10 +1,12 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 
-usage()
-{
+usage() {
     echo "Local usage: ${0} JOB_NAME"
 }
 
@@ -20,5 +22,5 @@ fi
 
 echo "TODO: This does not work."
 exit 0
-sed "s/example/${JOB_NAME}/" < "${SCRIPT_DIRECTORY}/../src/delete-failed-builds.groovy" > "${SCRIPT_DIRECTORY}/../tmp/delete-failed-builds.groovy"
+sed "s/example/${JOB_NAME}/" <"${SCRIPT_DIRECTORY}/../src/delete-failed-builds.groovy" >"${SCRIPT_DIRECTORY}/../tmp/delete-failed-builds.groovy"
 "${SCRIPT_DIRECTORY}/run-script.sh" "${SCRIPT_DIRECTORY}/../tmp/delete-failed-builds.groovy"
