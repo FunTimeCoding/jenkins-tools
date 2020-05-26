@@ -6,6 +6,7 @@ SCRIPT_DIRECTORY=$(
     pwd
 )
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../../lib/project.sh"
+. "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
 
-~/src/jenkins-tools/bin/update-job.sh "${PROJECT_NAME}" job.xml
+~/src/jenkins-tools/bin/update-job.sh "${PROJECT_NAME_DASH}" configuration/job.xml
+~/src/jenkins-tools/bin/build.sh "${PROJECT_NAME_DASH}"

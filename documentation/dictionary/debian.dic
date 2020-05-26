@@ -4,3 +4,10 @@ shlibs
 dpkg
 substvars
 listfiles
+backports
+preseed
+netboot
+pybuild
+buildsystem
+libyaml
+libxslt

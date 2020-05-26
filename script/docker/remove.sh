@@ -6,6 +6,10 @@ SCRIPT_DIRECTORY=$(
     pwd
 )
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../../lib/project.sh"
+. "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
 
-docker rm "${PROJECT_NAME}"
+docker ps --all | grep --quiet "${PROJECT_NAME_DASH}" && FOUND=true || FOUND=false
+
+if [ "${FOUND}" = true ]; then
+    docker rm "${PROJECT_NAME_DASH}"
+fi

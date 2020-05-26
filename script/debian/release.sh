@@ -6,7 +6,7 @@ SCRIPT_DIRECTORY=$(
     pwd
 )
 # shellcheck source=/dev/null
-. "${SCRIPT_DIRECTORY}/../../lib/project.sh"
+. "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
 
 MESSAGE="${1}"
 
@@ -17,7 +17,7 @@ if [ "${MESSAGE}" = '' ]; then
 fi
 
 if [ ! -f debian/changelog ]; then
-    dch --create --newversion "${COMBINED_VERSION}" --package "${PROJECT_NAME}" "Initial release."
+    dch --create --newversion "${COMBINED_VERSION}" --package "${PROJECT_NAME_DASH}" "Initial release."
 fi
 
 dch --newversion "${COMBINED_VERSION}" "${MESSAGE}"
