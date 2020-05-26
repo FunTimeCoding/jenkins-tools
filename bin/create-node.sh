@@ -1,10 +1,12 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 
-usage()
-{
+usage() {
     echo "Local usage: ${0} NEW_NODE_NAME NODE_CONFIGURATION"
 }
 
@@ -16,7 +18,7 @@ NODE_CONFIGURATION="${2}"
 if [ "${NEW_NODE_NAME}" = '' ] || [ "${NODE_CONFIGURATION}" = "" ]; then
     usage
 
-    exit 1;
+    exit 1
 fi
 
-${JENKINS} create-node "${NEW_NODE_NAME}" < "${NODE_CONFIGURATION}"
+${JENKINS} create-node "${NEW_NODE_NAME}" <"${NODE_CONFIGURATION}"

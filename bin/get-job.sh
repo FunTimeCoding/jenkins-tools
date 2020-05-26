@@ -1,10 +1,12 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 
-usage()
-{
+usage() {
     echo "Local usage: ${0} JOB_NAME [OUTPUT_FILE]"
 }
 
@@ -24,6 +26,6 @@ if [ "${OUTPUT_FILE}" = '' ]; then
     ${JENKINS} get-job "${JOB_NAME}"
     echo
 else
-    ${JENKINS} get-job "${JOB_NAME}" > "${OUTPUT_FILE}"
-    echo >> "${OUTPUT_FILE}"
+    ${JENKINS} get-job "${JOB_NAME}" >"${OUTPUT_FILE}"
+    echo >>"${OUTPUT_FILE}"
 fi

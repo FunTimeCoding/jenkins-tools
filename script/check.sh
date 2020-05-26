@@ -1,7 +1,10 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/project.sh"
 
@@ -38,7 +41,7 @@ DICTIONARY=en_US
 mkdir -p tmp
 
 if [ -d documentation/dictionary ]; then
-    cat documentation/dictionary/*.dic > tmp/combined.dic
+    cat documentation/dictionary/*.dic >tmp/combined.dic
 else
     touch tmp/combined.dic
 fi
@@ -106,7 +109,7 @@ if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
 
     for FILE in ${FILES}; do
         FILE_REPLACED=$(echo "${FILE}" | ${SED} 's/\//-/g')
-        shellcheck --format checkstyle "${FILE}" > "build/log/checkstyle-${FILE_REPLACED}.xml" || true
+        shellcheck --format checkstyle "${FILE}" >"build/log/checkstyle-${FILE_REPLACED}.xml" || true
     done
 else
     # shellcheck disable=SC2016
@@ -126,7 +129,7 @@ if [ ! "${EMPTY_FILES}" = '' ]; then
     CONCERN_FOUND=true
 
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${EMPTY_FILES}" > build/log/empty-files.txt
+        echo "${EMPTY_FILES}" >build/log/empty-files.txt
     else
         echo
         echo "(WARNING) Empty files:"
@@ -140,7 +143,7 @@ TO_DOS=$(${FIND} . -regextype posix-extended -type f ! -regex "${EXCLUDE_FILTER}
 
 if [ ! "${TO_DOS}" = '' ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${TO_DOS}" > build/log/to-dos.txt
+        echo "${TO_DOS}" >build/log/to-dos.txt
     else
         echo
         echo "(NOTICE) To dos:"
@@ -155,7 +158,7 @@ if [ ! "${DUPLICATE_WORDS}" = '' ]; then
     CONCERN_FOUND=true
 
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${DUPLICATE_WORDS}" > build/log/duplicate-words.txt
+        echo "${DUPLICATE_WORDS}" >build/log/duplicate-words.txt
     else
         echo
         echo "(WARNING) Duplicate words:"
@@ -168,7 +171,7 @@ SHELLCHECK_IGNORES=$(${FIND} . -regextype posix-extended -type f ! -regex "${EXC
 
 if [ ! "${SHELLCHECK_IGNORES}" = '' ]; then
     if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-        echo "${SHELLCHECK_IGNORES}" > build/log/shellcheck-ignores.txt
+        echo "${SHELLCHECK_IGNORES}" >build/log/shellcheck-ignores.txt
     else
         echo
         echo "(NOTICE) Shellcheck ignores:"

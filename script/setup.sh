@@ -5,7 +5,7 @@ SYSTEM=$(uname)
 if [ "${SYSTEM}" = Linux ]; then
     if [ "$(command -v lsb_release || true)" = '' ]; then
         if [ -f /etc/debian_version ]; then
-            VERSION=$(cut -c 1-1 < /etc/debian_version)
+            VERSION=$(cut -c 1-1 </etc/debian_version)
         fi
     else
         VERSION=$(lsb_release --release --short)

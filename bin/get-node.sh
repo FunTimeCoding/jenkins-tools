@@ -1,10 +1,12 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 
-usage()
-{
+usage() {
     echo "Local usage: ${0} NODE_NAME [OUTPUT_FILE]"
 }
 
@@ -23,6 +25,6 @@ if [ "${OUTPUT_FILE}" = '' ]; then
     ${JENKINS} get-node "${NODE_NAME}"
     echo
 else
-    ${JENKINS} get-node "${NODE_NAME}" > "${OUTPUT_FILE}"
-    echo >> "${OUTPUT_FILE}"
+    ${JENKINS} get-node "${NODE_NAME}" >"${OUTPUT_FILE}"
+    echo >>"${OUTPUT_FILE}"
 fi

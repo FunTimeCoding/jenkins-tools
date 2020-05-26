@@ -1,10 +1,12 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 
-usage()
-{
+usage() {
     echo "Local usage: ${0} JOB_NAME JOB_CONFIGURATION"
 }
 
@@ -25,4 +27,4 @@ if [ ! -f "${JOB_CONFIGURATION}" ]; then
     exit 1
 fi
 
-${JENKINS} update-job "${JOB_NAME}" < "${JOB_CONFIGURATION}"
+${JENKINS} update-job "${JOB_NAME}" <"${JOB_CONFIGURATION}"

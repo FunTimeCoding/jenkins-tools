@@ -1,7 +1,10 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../lib/jenkins_tools.sh"
 UPDATE_LIST=$(${JENKINS} list-plugins | grep -e ')$' | awk '{ print $1 }')
