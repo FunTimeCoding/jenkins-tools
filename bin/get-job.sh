@@ -23,9 +23,7 @@ fi
 
 # This condition exists to ensure a new line at end of file.
 if [ "${OUTPUT_FILE}" = '' ]; then
-    ${JENKINS} get-job "${JOB_NAME}"
-    echo
+    ${JENKINS} get-job "${JOB_NAME}" | xmllint --format --nowarning -
 else
-    ${JENKINS} get-job "${JOB_NAME}" >"${OUTPUT_FILE}"
-    echo >>"${OUTPUT_FILE}"
+    ${JENKINS} get-job "${JOB_NAME}" | xmllint --format --nowarning - >"${OUTPUT_FILE}"
 fi
